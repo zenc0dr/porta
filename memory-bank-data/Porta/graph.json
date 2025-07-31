@@ -7,6 +7,49 @@
   "attributes": {},
   "nodes": [
     {
+      "key": "agent_logging_system",
+      "attributes": {
+        "id": "agent_logging_system",
+        "type": "Feature",
+        "label": "Agent Logging System",
+        "data": {
+          "function": "log_agent_call",
+          "format": "[AGENT] {agent_id} called {method}: {result} at {timestamp}",
+          "integration": "Все POST endpoints",
+          "benefits": [
+            "Аудит-трейл",
+            "Мониторинг активности",
+            "Безопасность"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:13:00.067Z",
+          "lastModified": "2025-07-31T13:13:00.067Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "agent_status_endpoint",
+      "attributes": {
+        "id": "agent_status_endpoint",
+        "type": "Endpoint",
+        "label": "POST /agent/status",
+        "data": {
+          "method": "POST",
+          "path": "/agent/status",
+          "input": "AgentStatusRequest(agent_id: str)",
+          "output": "status, agent_id, timestamp",
+          "purpose": "Проверка работоспособности агента"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:13:00.067Z",
+          "lastModified": "2025-07-31T13:13:00.067Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "api_documentation",
       "attributes": {
         "id": "api_documentation",
@@ -806,6 +849,30 @@
         "metadata": {
           "createdAt": "2025-07-31T13:02:28.937Z",
           "lastModified": "2025-07-31T13:02:28.937Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "pmap_implementation_complete",
+      "attributes": {
+        "id": "pmap_implementation_complete",
+        "type": "Achievement",
+        "label": "PMAP Implementation Complete",
+        "data": {
+          "stage": "Этап 1.1 завершен",
+          "features": [
+            "agent_id во всех POST endpoints",
+            "Логирование агентов",
+            "/agent/status endpoint",
+            "Обратная совместимость"
+          ],
+          "testing": "Все endpoints протестированы",
+          "version": "1.1.0"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:13:00.067Z",
+          "lastModified": "2025-07-31T13:13:00.067Z",
           "version": 1
         }
       }
@@ -1684,6 +1751,45 @@
       }
     },
     {
+      "key": "geid_47_0",
+      "source": "pmap_implementation",
+      "target": "pmap_implementation_complete",
+      "attributes": {
+        "relationshipType": "ACHIEVED",
+        "metadata": {
+          "createdAt": "2025-07-31T13:13:00.067Z",
+          "lastModified": "2025-07-31T13:13:00.067Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_47_1",
+      "source": "pmap_implementation_complete",
+      "target": "agent_logging_system",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-07-31T13:13:00.067Z",
+          "lastModified": "2025-07-31T13:13:00.067Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_47_2",
+      "source": "pmap_implementation_complete",
+      "target": "agent_status_endpoint",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-07-31T13:13:00.067Z",
+          "lastModified": "2025-07-31T13:13:00.067Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_46_2",
       "source": "pmap_protocol",
       "target": "implementation_plan",
@@ -2335,9 +2441,9 @@
     }
   ],
   "metadata": {
-    "lastSaved": "2025-07-31T13:02:28.938Z",
-    "nodeCount": 60,
-    "edgeCount": 75,
+    "lastSaved": "2025-07-31T13:13:00.068Z",
+    "nodeCount": 63,
+    "edgeCount": 78,
     "version": 1
   }
 }

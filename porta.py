@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Request, HTTPException
 from pydantic import BaseModel
 from subprocess import run, PIPE, TimeoutExpired
+from typing import Optional
+from datetime import datetime
 import uvicorn
 import logging
 import os
@@ -12,40 +14,53 @@ logger = logging.getLogger(__name__)
 app = FastAPI(title="Porta MCP", description="Локальный интерфейс для агентов")
 
 
+def log_agent_call(agent_id: str, method: str, result: dict):
+    """Логирует вызов агента с timestamp"""
+    timestamp = datetime.now().isoformat()
+    logger.info(f"[AGENT] {agent_id} called {method}: {result} at {timestamp}")
+
+
 @app.get("/")
 def read_root():
     return {
         "name": "Porta MCP",
         "description": "Локальный интерфейс для агентов",
-        "version": "1.0.0",
+        "version": "1.1.0",
         "methods": [
             {
                 "name": "run_bash",
                 "description": "Выполняет bash-команду",
                 "endpoint": "/run_bash",
                 "method": "POST",
-                "parameters": {"cmd": "string"}
+                "parameters": {"cmd": "string", "agent_id": "string (optional)"}
             },
             {
                 "name": "write_file",
                 "description": "Создает или обновляет файл",
                 "endpoint": "/write_file",
                 "method": "POST",
-                "parameters": {"path": "string", "content": "string"}
+                "parameters": {"path": "string", "content": "string", "agent_id": "string (optional)"}
             },
             {
                 "name": "read_file",
                 "description": "Читает содержимое файла",
                 "endpoint": "/read_file",
                 "method": "POST",
-                "parameters": {"path": "string"}
+                "parameters": {"path": "string", "agent_id": "string (optional)"}
             },
             {
                 "name": "list_dir",
                 "description": "Показывает содержимое папки",
                 "endpoint": "/list_dir",
                 "method": "POST",
-                "parameters": {"path": "string", "include_hidden": "boolean"}
+                "parameters": {"path": "string", "include_hidden": "boolean", "agent_id": "string (optional)"}
+            },
+            {
+                "name": "agent_status",
+                "description": "Проверка работоспособности агента",
+                "endpoint": "/agent/status",
+                "method": "POST",
+                "parameters": {"agent_id": "string"}
             }
         ]
     }
@@ -53,20 +68,40 @@ def read_root():
 
 class BashCommand(BaseModel):
     cmd: str
+    agent_id: Optional[str] = None
 
 
 class FileWriteRequest(BaseModel):
     path: str
     content: str
+    agent_id: Optional[str] = None
 
 
 class FileReadRequest(BaseModel):
     path: str
+    agent_id: Optional[str] = None
 
 
 class DirListRequest(BaseModel):
     path: str
     include_hidden: bool = False
+    agent_id: Optional[str] = None
+
+
+class AgentStatusRequest(BaseModel):
+    agent_id: str
+
+
+@app.post("/agent/status")
+def agent_status(request: AgentStatusRequest):
+    """Проверка работоспособности агента"""
+    result = {
+        "status": "ok",
+        "agent_id": request.agent_id,
+        "timestamp": datetime.now().isoformat()
+    }
+    log_agent_call(request.agent_id, "agent_status", result)
+    return result
 
 
 @app.post("/run_bash")
@@ -84,12 +119,19 @@ def run_bash(command: BashCommand):
             timeout=30
         )
         
-        return {
+        response = {
             "stdout": result.stdout.strip(),
             "stderr": result.stderr.strip(),
             "exit_code": result.returncode,
             "success": result.returncode == 0
         }
+        
+        # Добавляем agent_id в ответ если он был передан
+        if command.agent_id:
+            response["agent_id"] = command.agent_id
+            log_agent_call(command.agent_id, "run_bash", response)
+        
+        return response
         
     except TimeoutExpired:
         logger.error(f"Команда превысила таймаут: {command.cmd}")
@@ -122,11 +164,18 @@ def write_file(req: FileWriteRequest):
         
         logger.info(f"Файл успешно записан: {full_path}")
         
-        return {
+        response = {
             "success": True,
             "message": "Файл успешно записан",
             "path": full_path
         }
+        
+        # Добавляем agent_id в ответ если он был передан
+        if req.agent_id:
+            response["agent_id"] = req.agent_id
+            log_agent_call(req.agent_id, "write_file", response)
+        
+        return response
         
     except HTTPException:
         # Перебрасываем HTTP исключения как есть
@@ -167,11 +216,18 @@ def read_file(req: FileReadRequest):
             
             logger.info(f"Файл успешно прочитан: {full_path}")
             
-            return {
+            response = {
                 "success": True,
                 "content": content,
                 "path": full_path
             }
+            
+            # Добавляем agent_id в ответ если он был передан
+            if req.agent_id:
+                response["agent_id"] = req.agent_id
+                log_agent_call(req.agent_id, "read_file", response)
+            
+            return response
             
         except UnicodeDecodeError:
             logger.error(f"Ошибка кодировки файла: {full_path}")
@@ -233,11 +289,18 @@ def list_dir(req: DirListRequest):
             
             logger.info(f"Папка успешно прочитана: {full_path}, найдено {len(entries)} элементов")
             
-            return {
+            response = {
                 "success": True,
                 "entries": entries,
                 "path": full_path
             }
+            
+            # Добавляем agent_id в ответ если он был передан
+            if req.agent_id:
+                response["agent_id"] = req.agent_id
+                log_agent_call(req.agent_id, "list_dir", response)
+            
+            return response
             
         except PermissionError:
             logger.error(f"Нет прав на чтение папки: {full_path}")

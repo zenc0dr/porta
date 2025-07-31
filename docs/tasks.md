@@ -10,12 +10,12 @@
 #### 1.1 Добавить agent_id во все POST endpoints
 **Файл:** `porta.py`
 **Задачи:**
-- [ ] Добавить поле `agent_id: Optional[str] = None` в модели запросов
-- [ ] Обновить `/run_bash` - добавить agent_id в BashCommand
-- [ ] Обновить `/write_file` - добавить agent_id в FileWriteRequest  
-- [ ] Обновить `/read_file` - добавить agent_id в FileReadRequest
-- [ ] Обновить `/list_dir` - добавить agent_id в ListDirRequest
-- [ ] Добавить agent_id в ответы всех endpoints
+- [x] Добавить поле `agent_id: Optional[str] = None` в модели запросов
+- [x] Обновить `/run_bash` - добавить agent_id в BashCommand
+- [x] Обновить `/write_file` - добавить agent_id в FileWriteRequest  
+- [x] Обновить `/read_file` - добавить agent_id в FileReadRequest
+- [x] Обновить `/list_dir` - добавить agent_id в ListDirRequest
+- [x] Добавить agent_id в ответы всех endpoints
 
 **Код:**
 ```python
@@ -32,10 +32,10 @@ class FileWriteRequest(BaseModel):
 #### 1.2 Логирование агентов
 **Файл:** `porta.py`
 **Задачи:**
-- [ ] Создать функцию `log_agent_call(agent_id: str, method: str, result: dict)`
-- [ ] Интегрировать логирование в каждый endpoint
-- [ ] Добавить timestamp в логи
-- [ ] Формат: `[AGENT] {agent_id} called {method}: {result}`
+- [x] Создать функцию `log_agent_call(agent_id: str, method: str, result: dict)`
+- [x] Интегрировать логирование в каждый endpoint
+- [x] Добавить timestamp в логи
+- [x] Формат: `[AGENT] {agent_id} called {method}: {result}`
 
 **Код:**
 ```python
@@ -47,10 +47,10 @@ def log_agent_call(agent_id: str, method: str, result: dict):
 #### 1.3 Endpoint `/agent/status`
 **Файл:** `porta.py`
 **Задачи:**
-- [ ] Создать модель AgentStatusRequest
-- [ ] Реализовать POST `/agent/status`
-- [ ] Возвращать статус, agent_id, timestamp
-- [ ] Логировать вызов
+- [x] Создать модель AgentStatusRequest
+- [x] Реализовать POST `/agent/status`
+- [x] Возвращать статус, agent_id, timestamp
+- [x] Логировать вызов
 
 **Код:**
 ```python
