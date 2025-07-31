@@ -277,6 +277,26 @@
       }
     },
     {
+      "key": "development_phases",
+      "attributes": {
+        "id": "development_phases",
+        "type": "Strategy",
+        "label": "Development Phases",
+        "data": {
+          "phase1": "agent_id support in all POST endpoints",
+          "phase2": "System endpoints (/meta, /public_url)",
+          "phase3": "Security and tokens",
+          "phase4": "Documentation and testing",
+          "phase5": "Advanced features"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:02:28.937Z",
+          "lastModified": "2025-07-31T13:02:28.937Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "error_handling",
       "attributes": {
         "id": "error_handling",
@@ -540,6 +560,36 @@
       }
     },
     {
+      "key": "implementation_plan",
+      "attributes": {
+        "id": "implementation_plan",
+        "type": "Plan",
+        "label": "План реализации PMAP",
+        "data": {
+          "stages": [
+            "Базовая агентная поддержка",
+            "Системные endpoints",
+            "Безопасность и токены",
+            "Документация и тестирование",
+            "Дополнительные возможности"
+          ],
+          "priority": "Этап 1: agent_id в endpoints",
+          "timeline": "Поэтапная реализация",
+          "principles": [
+            "Простота",
+            "Совместимость",
+            "Безопасность",
+            "Документация"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:02:28.937Z",
+          "lastModified": "2025-07-31T13:02:28.937Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "key_improvements",
       "attributes": {
         "id": "key_improvements",
@@ -635,6 +685,30 @@
       }
     },
     {
+      "key": "manifesto",
+      "attributes": {
+        "id": "manifesto",
+        "type": "Document",
+        "label": "Манифест Porta v1 - Простота как сила",
+        "data": {
+          "title": "Манифест Porta v1",
+          "subtitle": "Простота как сила",
+          "principles": [
+            "Универсальный агентный интерфейс",
+            "Безопасный, стандартизованный доступ",
+            "REST API вместо локальных скриптов",
+            "Готовность к подключению ИИ-агентов"
+          ],
+          "vision": "Porta превращает любое Linux-устройство в MCP-сервер"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:00:46.947Z",
+          "lastModified": "2025-07-31T13:00:46.947Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "network_concepts",
       "attributes": {
         "id": "network_concepts",
@@ -702,6 +776,66 @@
         "metadata": {
           "createdAt": "2025-07-31T10:16:40.066Z",
           "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "pmap_implementation",
+      "attributes": {
+        "id": "pmap_implementation",
+        "type": "Implementation",
+        "label": "PMAP Implementation Details",
+        "data": {
+          "models": [
+            "AgentStatusRequest",
+            "AgentResponse"
+          ],
+          "logging": "log_agent_call function",
+          "endpoints": [
+            "/agent/status",
+            "/meta",
+            "/public_url"
+          ],
+          "security": [
+            "X-PORTA-TOKEN",
+            "agent_id validation",
+            "audit trail"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:02:28.937Z",
+          "lastModified": "2025-07-31T13:02:28.937Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "pmap_protocol",
+      "attributes": {
+        "id": "pmap_protocol",
+        "type": "Protocol",
+        "label": "Porta Minimal Agent Protocol (PMAP)",
+        "data": {
+          "name": "PMAP",
+          "description": "Минимальная, но самодостаточная модель взаимодействия",
+          "endpoints": [
+            "/run_bash",
+            "/read_file",
+            "/write_file",
+            "/list_dir",
+            "/agent/status"
+          ],
+          "features": [
+            "agent_id в каждом POST-запросе",
+            "X-PORTA-TOKEN (опционально)",
+            "Логирование агентов",
+            "Системная информация"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:00:46.947Z",
+          "lastModified": "2025-07-31T13:00:46.947Z",
           "version": 1
         }
       }
@@ -785,6 +919,30 @@
         "metadata": {
           "createdAt": "2025-07-31T12:01:10.215Z",
           "lastModified": "2025-07-31T12:01:10.215Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "porta_vision",
+      "attributes": {
+        "id": "porta_vision",
+        "type": "Vision",
+        "label": "Porta как MCP-драйвер для Linux",
+        "data": {
+          "concept": "Porta = MCP-драйвер для Linux",
+          "purpose": "Универсальный интерфейс для агентных систем",
+          "architecture": "Агентная система ←→ Porta MCP Server ←→ Linux устройство",
+          "benefits": [
+            "Единый протокол для всех устройств",
+            "Стандартизированный доступ",
+            "Масштабируемость",
+            "Безопасность по умолчанию"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:00:46.947Z",
+          "lastModified": "2025-07-31T13:00:46.947Z",
           "version": 1
         }
       }
@@ -1422,6 +1580,19 @@
       }
     },
     {
+      "key": "geid_46_0",
+      "source": "implementation_plan",
+      "target": "pmap_implementation",
+      "attributes": {
+        "relationshipType": "DEFINES",
+        "metadata": {
+          "createdAt": "2025-07-31T13:02:28.937Z",
+          "lastModified": "2025-07-31T13:02:28.937Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_52_0",
       "source": "key_improvements",
       "target": "original_issues",
@@ -1495,6 +1666,45 @@
         "metadata": {
           "createdAt": "2025-07-31T12:32:26.948Z",
           "lastModified": "2025-07-31T12:32:26.948Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_46_1",
+      "source": "pmap_implementation",
+      "target": "development_phases",
+      "attributes": {
+        "relationshipType": "ORGANIZED_INTO",
+        "metadata": {
+          "createdAt": "2025-07-31T13:02:28.938Z",
+          "lastModified": "2025-07-31T13:02:28.938Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_46_2",
+      "source": "pmap_protocol",
+      "target": "implementation_plan",
+      "attributes": {
+        "relationshipType": "IMPLEMENTED_BY",
+        "metadata": {
+          "createdAt": "2025-07-31T13:02:28.938Z",
+          "lastModified": "2025-07-31T13:02:28.938Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_45_0",
+      "source": "pmap_protocol",
+      "target": "manifesto",
+      "attributes": {
+        "relationshipType": "FOLLOWS",
+        "metadata": {
+          "createdAt": "2025-07-31T13:00:46.947Z",
+          "lastModified": "2025-07-31T13:00:46.947Z",
           "version": 1
         }
       }
@@ -1638,6 +1848,19 @@
         "metadata": {
           "createdAt": "2025-07-31T10:15:50.213Z",
           "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_45_1",
+      "source": "porta_project",
+      "target": "porta_vision",
+      "attributes": {
+        "relationshipType": "EVOLVES_TO",
+        "metadata": {
+          "createdAt": "2025-07-31T13:00:46.947Z",
+          "lastModified": "2025-07-31T13:00:46.947Z",
           "version": 1
         }
       }
@@ -1955,6 +2178,19 @@
       }
     },
     {
+      "key": "geid_45_2",
+      "source": "porta_vision",
+      "target": "pmap_protocol",
+      "attributes": {
+        "relationshipType": "IMPLEMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T13:00:46.947Z",
+          "lastModified": "2025-07-31T13:00:46.947Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_52_9",
       "source": "project_goals",
       "target": "deployment_verification",
@@ -2099,9 +2335,9 @@
     }
   ],
   "metadata": {
-    "lastSaved": "2025-07-31T12:32:26.952Z",
-    "nodeCount": 54,
-    "edgeCount": 69,
+    "lastSaved": "2025-07-31T13:02:28.938Z",
+    "nodeCount": 60,
+    "edgeCount": 75,
     "version": 1
   }
 }
