@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request, HTTPException
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from subprocess import run, PIPE, TimeoutExpired
 from typing import Optional
@@ -6,12 +7,50 @@ from datetime import datetime
 import uvicorn
 import logging
 import os
+import time
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Porta MCP", description="Локальный интерфейс для агентов")
+
+# Глобальная переменная для отслеживания времени запуска
+START_TIME = time.time()
+
+def get_uptime():
+    """Возвращает время работы сервера в секундах"""
+    return int(time.time() - START_TIME)
+
+
+@app.middleware("http")
+async def verify_token(request: Request, call_next):
+    """Middleware для проверки X-PORTA-TOKEN заголовка"""
+    expected_token = os.getenv("PORTA_TOKEN")
+    token = request.headers.get("X-PORTA-TOKEN")
+    
+    # Если токен не настроен, пропускаем проверку
+    if not expected_token:
+        return await call_next(request)
+    
+    # Если токен настроен, но не передан - отказываем в доступе
+    if not token:
+        logger.warning(f"Попытка доступа без токена: {request.url}")
+        return JSONResponse(
+            status_code=401, 
+            content={"error": "Missing X-PORTA-TOKEN header"}
+        )
+    
+    # Если токен неверный - отказываем в доступе
+    if token != expected_token:
+        logger.warning(f"Попытка доступа с неверным токеном: {request.url}")
+        return JSONResponse(
+            status_code=401, 
+            content={"error": "Invalid token"}
+        )
+    
+    # Токен верный - пропускаем запрос
+    return await call_next(request)
 
 
 def log_agent_call(agent_id: str, method: str, result: dict):
@@ -25,7 +64,8 @@ def read_root():
     return {
         "name": "Porta MCP",
         "description": "Локальный интерфейс для агентов",
-        "version": "1.1.0",
+        "version": "1.2.0",
+        "security": "X-PORTA-TOKEN authentication enabled",
         "methods": [
             {
                 "name": "run_bash",
@@ -64,6 +104,61 @@ def read_root():
             }
         ]
     }
+
+
+@app.get("/meta")
+def get_meta():
+    """Возвращает системную информацию о Porta"""
+    return {
+        "name": "Porta MCP",
+        "version": "1.2.0",
+        "description": "MCP-драйвер для Linux",
+        "uptime": get_uptime(),
+        "pid": os.getpid(),
+        "port": 8111,  # Фактический порт работы
+        "security": "X-PORTA-TOKEN authentication enabled",
+        "endpoints": [
+            "/",
+            "/meta", 
+            "/public_url",
+            "/run_bash", 
+            "/write_file", 
+            "/read_file", 
+            "/list_dir", 
+            "/agent/status"
+        ],
+        "timestamp": datetime.now().isoformat()
+    }
+
+
+@app.get("/public_url")
+def get_public_url():
+    """Возвращает публичный URL через ngrok"""
+    try:
+        # Проверяем существование файла ngrok.url
+        if os.path.exists("ngrok.url"):
+            with open("ngrok.url", "r") as f:
+                url = f.read().strip()
+            return {
+                "public_url": url, 
+                "available": True,
+                "timestamp": datetime.now().isoformat()
+            }
+        else:
+            return {
+                "public_url": None, 
+                "available": False,
+                "message": "ngrok.url файл не найден",
+                "timestamp": datetime.now().isoformat()
+            }
+    except Exception as e:
+        logger.error(f"Ошибка чтения ngrok URL: {str(e)}")
+        return {
+            "public_url": None, 
+            "available": False,
+            "error": str(e),
+            "timestamp": datetime.now().isoformat()
+        }
 
 
 class BashCommand(BaseModel):

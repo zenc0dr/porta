@@ -7,6 +7,11 @@ NGROK_URL_FILE="ngrok.url"
 
 start_server() {
     echo "🚀 Запуск Porta MCP на порту $PORT..."
+    
+    # Устанавливаем токен безопасности
+    export PORTA_TOKEN="test123"
+    echo "🔐 Токен безопасности установлен: $PORTA_TOKEN"
+    
     nohup uvicorn porta:app --host 0.0.0.0 --port $PORT > porta.log 2>&1 &
     echo $! > "$UVICORN_PID_FILE"
     sleep 2

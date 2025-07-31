@@ -216,6 +216,59 @@
       }
     },
     {
+      "key": "current_architecture",
+      "attributes": {
+        "id": "current_architecture",
+        "type": "Architecture",
+        "label": "Текущая архитектура Porta",
+        "data": {
+          "version": "1.1.0",
+          "endpoints": [
+            "/",
+            "/meta",
+            "/public_url",
+            "/run_bash",
+            "/write_file",
+            "/read_file",
+            "/list_dir",
+            "/agent/status"
+          ],
+          "features": [
+            "agent support",
+            "system info",
+            "ngrok integration",
+            "file operations",
+            "bash execution"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:59.838Z",
+          "lastModified": "2025-07-31T13:42:59.838Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "cursor_terminal_notes",
+      "attributes": {
+        "id": "cursor_terminal_notes",
+        "type": "Note",
+        "label": "Особенности терминала Cursor",
+        "data": {
+          "warnings": [
+            "your 131072x1 screen size is bogus. expect trouble"
+          ],
+          "behavior": "Команды выполняются корректно, но есть предупреждения о размере экрана",
+          "background_processes": "Фоновые процессы могут не показывать полный вывод"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:48:25.672Z",
+          "lastModified": "2025-07-31T13:48:25.672Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "dependencies_list",
       "attributes": {
         "id": "dependencies_list",
@@ -633,6 +686,38 @@
       }
     },
     {
+      "key": "implementation_success",
+      "attributes": {
+        "id": "implementation_success",
+        "type": "Achievement",
+        "label": "PMAP Implementation Success",
+        "data": {
+          "date": "2025-07-31T17:12",
+          "version": "1.1.0",
+          "features_implemented": [
+            "agent_id support",
+            "agent logging",
+            "/agent/status endpoint",
+            "backward compatibility"
+          ],
+          "testing_results": [
+            "All endpoints work",
+            "agent_id in responses",
+            "logging functional"
+          ],
+          "next_steps": [
+            "/meta endpoint",
+            "/public_url endpoint"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:34:51.640Z",
+          "lastModified": "2025-07-31T13:34:51.640Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "key_improvements",
       "attributes": {
         "id": "key_improvements",
@@ -752,6 +837,29 @@
       }
     },
     {
+      "key": "meta_endpoint",
+      "attributes": {
+        "id": "meta_endpoint",
+        "type": "Feature",
+        "label": "GET /meta endpoint",
+        "data": {
+          "description": "Системная информация о Porta",
+          "features": [
+            "uptime",
+            "pid",
+            "port",
+            "endpoints",
+            "timestamp"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:50.755Z",
+          "lastModified": "2025-07-31T13:42:50.755Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "network_concepts",
       "attributes": {
         "id": "network_concepts",
@@ -773,6 +881,30 @@
         "metadata": {
           "createdAt": "2025-07-31T12:32:26.915Z",
           "lastModified": "2025-07-31T12:32:26.915Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "next_development_phase",
+      "attributes": {
+        "id": "next_development_phase",
+        "type": "Plan",
+        "label": "Следующий этап разработки",
+        "data": {
+          "current_phase": "Этап 2: Системные endpoints",
+          "next_tasks": [
+            "GET /meta endpoint",
+            "GET /public_url endpoint",
+            "Интеграция с ngrok",
+            "Системная информация"
+          ],
+          "estimated_completion": "Ближайшие дни",
+          "priority": "Высокая - завершение базовой функциональности"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:35:22.704Z",
+          "lastModified": "2025-07-31T13:35:22.704Z",
           "version": 1
         }
       }
@@ -964,6 +1096,29 @@
       }
     },
     {
+      "key": "porta_server_management",
+      "attributes": {
+        "id": "porta_server_management",
+        "type": "Procedure",
+        "label": "Управление сервером Porta",
+        "data": {
+          "script": "porta-server.sh",
+          "location": "/aum/projects/Porta/porta-server.sh",
+          "commands": [
+            "start",
+            "stop",
+            "status",
+            "restart"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:48:25.672Z",
+          "lastModified": "2025-07-31T13:48:25.672Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "porta_server_script",
       "attributes": {
         "id": "porta_server_script",
@@ -986,6 +1141,25 @@
         "metadata": {
           "createdAt": "2025-07-31T12:01:10.215Z",
           "lastModified": "2025-07-31T12:01:10.215Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "porta_v1_2",
+      "attributes": {
+        "id": "porta_v1_2",
+        "type": "Version",
+        "label": "Porta v1.2.0",
+        "data": {
+          "version": "1.2.0",
+          "security": "X-PORTA-TOKEN authentication enabled",
+          "token": "test123",
+          "ngrok_url": "https://6872cba32941.ngrok-free.app"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T14:00:39.202Z",
+          "lastModified": "2025-07-31T14:00:39.202Z",
           "version": 1
         }
       }
@@ -1051,6 +1225,27 @@
         "metadata": {
           "createdAt": "2025-07-31T12:32:26.915Z",
           "lastModified": "2025-07-31T12:32:26.915Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "public_url_endpoint",
+      "attributes": {
+        "id": "public_url_endpoint",
+        "type": "Feature",
+        "label": "GET /public_url endpoint",
+        "data": {
+          "description": "Интеграция с ngrok",
+          "features": [
+            "public_url",
+            "available",
+            "timestamp"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:50.755Z",
+          "lastModified": "2025-07-31T13:42:50.755Z",
           "version": 1
         }
       }
@@ -1225,6 +1420,27 @@
       }
     },
     {
+      "key": "security_middleware",
+      "attributes": {
+        "id": "security_middleware",
+        "type": "Feature",
+        "label": "X-PORTA-TOKEN middleware",
+        "data": {
+          "description": "Middleware для проверки токенов безопасности",
+          "features": [
+            "token validation",
+            "access control",
+            "logging attempts"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T14:00:39.202Z",
+          "lastModified": "2025-07-31T14:00:39.202Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "security_patterns",
       "attributes": {
         "id": "security_patterns",
@@ -1253,6 +1469,200 @@
       }
     },
     {
+      "key": "security_requirements",
+      "attributes": {
+        "id": "security_requirements",
+        "type": "Requirement",
+        "label": "Требования безопасности",
+        "data": {
+          "authentication": "optional",
+          "token_header": "X-PORTA-TOKEN",
+          "env_variable": "PORTA_TOKEN",
+          "logging": "access attempts"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:59.838Z",
+          "lastModified": "2025-07-31T13:42:59.838Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "security_testing",
+      "attributes": {
+        "id": "security_testing",
+        "type": "Test",
+        "label": "Тестирование безопасности",
+        "data": {
+          "test_cases": [
+            "without_token",
+            "with_correct_token",
+            "with_wrong_token"
+          ],
+          "results": {
+            "without_token": "401 Missing X-PORTA-TOKEN header",
+            "with_correct_token": "200 OK",
+            "with_wrong_token": "401 Invalid token"
+          }
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T14:00:39.202Z",
+          "lastModified": "2025-07-31T14:00:39.202Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "server_config",
+      "attributes": {
+        "id": "server_config",
+        "type": "Configuration",
+        "label": "Конфигурация сервера",
+        "data": {
+          "actual_port": 8111,
+          "ngrok_url": "https://de8a48f21fa7.ngrok-free.app",
+          "startup_script": "porta-server.sh"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:50.755Z",
+          "lastModified": "2025-07-31T13:42:50.755Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "server_configuration",
+      "attributes": {
+        "id": "server_configuration",
+        "type": "Configuration",
+        "label": "Конфигурация сервера",
+        "data": {
+          "port": 8111,
+          "ngrok_url": "https://de8a48f21fa7.ngrok-free.app",
+          "pid_porta": 308119,
+          "pid_ngrok": 308134,
+          "working_directory": "/aum/projects/Porta"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:48:25.672Z",
+          "lastModified": "2025-07-31T13:48:25.672Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "server_start_command",
+      "attributes": {
+        "id": "server_start_command",
+        "type": "Command",
+        "label": "Запуск сервера",
+        "data": {
+          "command": "/aum/projects/Porta/porta-server.sh start",
+          "description": "Запускает Porta MCP на порту 8111 и ngrok",
+          "output": "🚀 Запуск Porta MCP на порту 8111...n🌐 Запуск ngrok...n✅ MCP доступен по адресу: https://de8a48f21fa7.ngrok-free.app"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:48:25.672Z",
+          "lastModified": "2025-07-31T13:48:25.672Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "server_status_command",
+      "attributes": {
+        "id": "server_status_command",
+        "type": "Command",
+        "label": "Проверка статуса",
+        "data": {
+          "command": "/aum/projects/Porta/porta-server.sh status",
+          "description": "Показывает статус Porta и ngrok процессов",
+          "output": "📊 Статус Porta MCP:n🟢 Porta работает (PID 308119)n🟢 ngrok работает (PID 308134)n🌍 Публичный адрес: https://de8a48f21fa7.ngrok-free.app"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:48:25.672Z",
+          "lastModified": "2025-07-31T13:48:25.672Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "server_stop_command",
+      "attributes": {
+        "id": "server_stop_command",
+        "type": "Command",
+        "label": "Остановка сервера",
+        "data": {
+          "command": "/aum/projects/Porta/porta-server.sh stop",
+          "description": "Останавливает Porta и ngrok процессы"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:48:25.672Z",
+          "lastModified": "2025-07-31T13:48:25.672Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "stage2_completion",
+      "attributes": {
+        "id": "stage2_completion",
+        "type": "Milestone",
+        "label": "Этап 2: Системные endpoints завершен",
+        "data": {
+          "date": "2025-07-31T17:41",
+          "version": "1.1.0",
+          "status": "completed"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:50.757Z",
+          "lastModified": "2025-07-31T13:42:50.757Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "stage3_completion",
+      "attributes": {
+        "id": "stage3_completion",
+        "type": "Milestone",
+        "label": "Этап 3: Безопасность и токены завершен",
+        "data": {
+          "date": "2025-07-31T17:59",
+          "version": "1.2.0",
+          "status": "completed"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T14:00:39.202Z",
+          "lastModified": "2025-07-31T14:00:39.202Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "stage3_planning",
+      "attributes": {
+        "id": "stage3_planning",
+        "type": "Plan",
+        "label": "Этап 3: Безопасность и токены",
+        "data": {
+          "status": "planned",
+          "priority": "high",
+          "tasks": [
+            "X-PORTA-TOKEN заголовок",
+            "middleware для проверки токенов",
+            "конфигурация через переменные окружения",
+            "логирование попыток доступа"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:59.838Z",
+          "lastModified": "2025-07-31T13:42:59.838Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "subprocess_execution",
       "attributes": {
         "id": "subprocess_execution",
@@ -1267,6 +1677,36 @@
         "metadata": {
           "createdAt": "2025-07-31T10:16:16.828Z",
           "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "team_achievements",
+      "attributes": {
+        "id": "team_achievements",
+        "type": "Achievement",
+        "label": "Командные достижения",
+        "data": {
+          "version": "1.1.0",
+          "date": "2025-07-31T17:12",
+          "milestone": "Первый релиз с поддержкой агентных систем",
+          "team_qualities": [
+            "Архитектурное мышление",
+            "Внимание к деталям",
+            "Быстрая реализация",
+            "Готовность к росту"
+          ],
+          "key_features": [
+            "PMAP протокол",
+            "Обратная совместимость",
+            "Логирование агентов",
+            "Готовность к масштабированию"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:35:22.704Z",
+          "lastModified": "2025-07-31T13:35:22.704Z",
           "version": 1
         }
       }
@@ -1293,6 +1733,36 @@
         "metadata": {
           "createdAt": "2025-07-31T12:01:10.215Z",
           "lastModified": "2025-07-31T12:01:10.215Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "technical_implementation",
+      "attributes": {
+        "id": "technical_implementation",
+        "type": "Code",
+        "label": "Technical Implementation Details",
+        "data": {
+          "models_updated": [
+            "BashCommand",
+            "FileWriteRequest",
+            "FileReadRequest",
+            "DirListRequest"
+          ],
+          "new_models": [
+            "AgentStatusRequest"
+          ],
+          "logging_function": "log_agent_call with timestamp",
+          "response_format": "agent_id added to all responses when provided",
+          "imports_added": [
+            "Optional from typing",
+            "datetime"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T13:34:51.640Z",
+          "lastModified": "2025-07-31T13:34:51.640Z",
           "version": 1
         }
       }
@@ -1491,6 +1961,32 @@
       }
     },
     {
+      "key": "geid_51_17",
+      "source": "current_architecture",
+      "target": "stage2_completion",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:59.838Z",
+          "lastModified": "2025-07-31T13:42:59.838Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_12",
+      "source": "cursor_terminal_notes",
+      "target": "server_status_command",
+      "attributes": {
+        "relationshipType": "AFFECTS",
+        "metadata": {
+          "createdAt": "2025-07-31T13:48:25.672Z",
+          "lastModified": "2025-07-31T13:48:25.672Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_51_4",
       "source": "deployment_commands",
       "target": "curl_examples",
@@ -1660,6 +2156,45 @@
       }
     },
     {
+      "key": "geid_49_0",
+      "source": "implementation_success",
+      "target": "team_achievements",
+      "attributes": {
+        "relationshipType": "DEMONSTRATES",
+        "metadata": {
+          "createdAt": "2025-07-31T13:35:22.704Z",
+          "lastModified": "2025-07-31T13:35:22.704Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_48_0",
+      "source": "implementation_success",
+      "target": "technical_implementation",
+      "attributes": {
+        "relationshipType": "IMPLEMENTED_WITH",
+        "metadata": {
+          "createdAt": "2025-07-31T13:34:51.640Z",
+          "lastModified": "2025-07-31T13:34:51.640Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_48_1",
+      "source": "implementation_success",
+      "target": "testing_results",
+      "attributes": {
+        "relationshipType": "VALIDATED_BY",
+        "metadata": {
+          "createdAt": "2025-07-31T13:34:51.640Z",
+          "lastModified": "2025-07-31T13:34:51.640Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_52_0",
       "source": "key_improvements",
       "target": "original_issues",
@@ -1725,6 +2260,19 @@
       }
     },
     {
+      "key": "geid_50_17",
+      "source": "meta_endpoint",
+      "target": "testing_results",
+      "attributes": {
+        "relationshipType": "TESTED_BY",
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:50.757Z",
+          "lastModified": "2025-07-31T13:42:50.757Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_44_4",
       "source": "ngrok_knowledge",
       "target": "network_concepts",
@@ -1785,6 +2333,19 @@
         "metadata": {
           "createdAt": "2025-07-31T13:13:00.067Z",
           "lastModified": "2025-07-31T13:13:00.067Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_48_2",
+      "source": "pmap_implementation_complete",
+      "target": "implementation_success",
+      "attributes": {
+        "relationshipType": "ACHIEVED",
+        "metadata": {
+          "createdAt": "2025-07-31T13:34:51.641Z",
+          "lastModified": "2025-07-31T13:34:51.641Z",
           "version": 1
         }
       }
@@ -2271,6 +2832,45 @@
       }
     },
     {
+      "key": "geid_52_13",
+      "source": "porta_server_management",
+      "target": "server_start_command",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-07-31T13:48:25.672Z",
+          "lastModified": "2025-07-31T13:48:25.672Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_14",
+      "source": "porta_server_management",
+      "target": "server_status_command",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-07-31T13:48:25.672Z",
+          "lastModified": "2025-07-31T13:48:25.672Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_15",
+      "source": "porta_server_management",
+      "target": "server_stop_command",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-07-31T13:48:25.673Z",
+          "lastModified": "2025-07-31T13:48:25.673Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_43_6",
       "source": "porta_server_script",
       "target": "uvicorn_cli_usage",
@@ -2318,6 +2918,19 @@
         "metadata": {
           "createdAt": "2025-07-31T12:32:26.948Z",
           "lastModified": "2025-07-31T12:32:26.948Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_18",
+      "source": "public_url_endpoint",
+      "target": "testing_results",
+      "attributes": {
+        "relationshipType": "TESTED_BY",
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:50.757Z",
+          "lastModified": "2025-07-31T13:42:50.757Z",
           "version": 1
         }
       }
@@ -2388,6 +3001,149 @@
       }
     },
     {
+      "key": "geid_53_0",
+      "source": "security_middleware",
+      "target": "security_testing",
+      "attributes": {
+        "relationshipType": "TESTED_BY",
+        "metadata": {
+          "createdAt": "2025-07-31T14:00:39.202Z",
+          "lastModified": "2025-07-31T14:00:39.202Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_19",
+      "source": "server_config",
+      "target": "testing_results",
+      "attributes": {
+        "relationshipType": "ENABLES",
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:50.758Z",
+          "lastModified": "2025-07-31T13:42:50.758Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_16",
+      "source": "server_start_command",
+      "target": "server_configuration",
+      "attributes": {
+        "relationshipType": "CONFIGURES",
+        "metadata": {
+          "createdAt": "2025-07-31T13:48:25.673Z",
+          "lastModified": "2025-07-31T13:48:25.673Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_17",
+      "source": "server_status_command",
+      "target": "server_configuration",
+      "attributes": {
+        "relationshipType": "MONITORS",
+        "metadata": {
+          "createdAt": "2025-07-31T13:48:25.673Z",
+          "lastModified": "2025-07-31T13:48:25.673Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_20",
+      "source": "stage2_completion",
+      "target": "meta_endpoint",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:50.758Z",
+          "lastModified": "2025-07-31T13:42:50.758Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_21",
+      "source": "stage2_completion",
+      "target": "public_url_endpoint",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:50.758Z",
+          "lastModified": "2025-07-31T13:42:50.758Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_18",
+      "source": "stage2_completion",
+      "target": "stage3_planning",
+      "attributes": {
+        "relationshipType": "PRECEDES",
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:59.838Z",
+          "lastModified": "2025-07-31T13:42:59.838Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_53_1",
+      "source": "stage3_completion",
+      "target": "porta_v1_2",
+      "attributes": {
+        "relationshipType": "RELEASES",
+        "metadata": {
+          "createdAt": "2025-07-31T14:00:39.202Z",
+          "lastModified": "2025-07-31T14:00:39.202Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_53_2",
+      "source": "stage3_completion",
+      "target": "security_middleware",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-07-31T14:00:39.202Z",
+          "lastModified": "2025-07-31T14:00:39.202Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_19",
+      "source": "stage3_planning",
+      "target": "security_requirements",
+      "attributes": {
+        "relationshipType": "DEFINES",
+        "metadata": {
+          "createdAt": "2025-07-31T13:42:59.838Z",
+          "lastModified": "2025-07-31T13:42:59.838Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_49_1",
+      "source": "team_achievements",
+      "target": "next_development_phase",
+      "attributes": {
+        "relationshipType": "LEADS_TO",
+        "metadata": {
+          "createdAt": "2025-07-31T13:35:22.704Z",
+          "lastModified": "2025-07-31T13:35:22.704Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_52_11",
       "source": "testing_strategy",
       "target": "deployment_verification",
@@ -2441,9 +3197,9 @@
     }
   ],
   "metadata": {
-    "lastSaved": "2025-07-31T13:13:00.068Z",
-    "nodeCount": 63,
-    "edgeCount": 78,
+    "lastSaved": "2025-07-31T14:00:39.203Z",
+    "nodeCount": 84,
+    "edgeCount": 100,
     "version": 1
   }
 }
