@@ -1,0 +1,1582 @@
+{
+  "options": {
+    "type": "directed",
+    "multi": true,
+    "allowSelfLoops": true
+  },
+  "attributes": {},
+  "nodes": [
+    {
+      "key": "api_documentation",
+      "attributes": {
+        "id": "api_documentation",
+        "type": "Feature",
+        "label": "API Documentation",
+        "data": {
+          "endpoint": "/",
+          "method": "GET",
+          "output": "API description with available methods",
+          "format": "JSON"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.212Z",
+          "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "api_testing",
+      "attributes": {
+        "id": "api_testing",
+        "type": "Testing",
+        "label": "API Testing Results",
+        "data": {
+          "server_startup": "✅ Success - INFO: Uvicorn running on http://0.0.0.0:5000",
+          "get_endpoint_test": "✅ Returns JSON with API description",
+          "post_endpoint_test": "✅ Executes \"echo hello world\" successfully",
+          "response_format": "✅ Correct JSON structure with stdout, stderr, exit_code, success"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.827Z",
+          "lastModified": "2025-07-31T10:16:16.827Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "bash_command_execution",
+      "attributes": {
+        "id": "bash_command_execution",
+        "type": "Feature",
+        "label": "Bash Command Execution",
+        "data": {
+          "endpoint": "/run_bash",
+          "method": "POST",
+          "input": "cmd field (string)",
+          "output": "stdout, stderr, exit_code, success",
+          "timeout": "30 seconds",
+          "security": "subprocess with timeout protection"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.212Z",
+          "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "bash_command_model",
+      "attributes": {
+        "id": "bash_command_model",
+        "type": "DataModel",
+        "label": "BashCommand Model",
+        "data": {
+          "class": "BashCommand",
+          "inherits": "BaseModel",
+          "fields": {
+            "cmd": "str"
+          },
+          "validation": "Pydantic automatic validation"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.827Z",
+          "lastModified": "2025-07-31T10:16:16.827Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "bash_endpoint",
+      "attributes": {
+        "id": "bash_endpoint",
+        "type": "Endpoint",
+        "label": "POST /run_bash Endpoint",
+        "data": {
+          "method": "POST",
+          "path": "/run_bash",
+          "input_model": "BashCommand(cmd: str)",
+          "purpose": "Execute bash commands",
+          "timeout": "30 seconds",
+          "response": {
+            "stdout": "string",
+            "stderr": "string",
+            "exit_code": "integer",
+            "success": "boolean"
+          }
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.827Z",
+          "lastModified": "2025-07-31T10:16:16.827Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "code_quality",
+      "attributes": {
+        "id": "code_quality",
+        "type": "Quality",
+        "label": "Code Quality Features",
+        "data": {
+          "type_hints": "Uses Pydantic for type validation",
+          "error_handling": "Comprehensive try-catch blocks",
+          "logging": "Proper logging setup and usage",
+          "documentation": "Clear API documentation",
+          "modularity": "Clean separation of concerns"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "curl_examples",
+      "attributes": {
+        "id": "curl_examples",
+        "type": "Examples",
+        "label": "cURL Examples",
+        "data": {
+          "get_api_info": "curl -s http://localhost:5000/ | python3 -m json.tool",
+          "execute_command": "curl -X POST \"http://localhost:5000/run_bash\" -H \"Content-Type: application/json\" -d '{\"cmd\": \"echo hello world\"}' | python3 -m json.tool",
+          "expected_response": "{\"stdout\": \"hello world\", \"stderr\": \"\", \"exit_code\": 0, \"success\": true}"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.827Z",
+          "lastModified": "2025-07-31T10:16:16.827Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "dependencies_list",
+      "attributes": {
+        "id": "dependencies_list",
+        "type": "Dependencies",
+        "label": "Project Dependencies",
+        "data": {
+          "fastapi": "0.116.1 - Web framework",
+          "uvicorn": "0.33.0 - ASGI server",
+          "pydantic": "2.8.2 - Data validation",
+          "python_version": "3.8+",
+          "installation": "pip3 install -r requirements.txt"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.827Z",
+          "lastModified": "2025-07-31T10:16:16.827Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "deployment_commands",
+      "attributes": {
+        "id": "deployment_commands",
+        "type": "Deployment",
+        "label": "Deployment Commands",
+        "data": {
+          "install": "pip3 install -r requirements.txt",
+          "run": "python3 porta.py",
+          "test_import": "python3 -c \"import porta; print('✅ porta.py импортируется успешно')\"",
+          "test_server": "timeout 5 python3 porta.py",
+          "test_api": "curl -s http://localhost:5000/ | python3 -m json.tool"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.827Z",
+          "lastModified": "2025-07-31T10:16:16.827Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "deployment_instructions",
+      "attributes": {
+        "id": "deployment_instructions",
+        "type": "Instruction",
+        "label": "Deployment Instructions",
+        "data": {
+          "install": "pip3 install -r requirements.txt",
+          "run": "python3 porta.py",
+          "access": "http://localhost:5000",
+          "testing": "curl commands provided in readme"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.212Z",
+          "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "deployment_verification",
+      "attributes": {
+        "id": "deployment_verification",
+        "type": "Verification",
+        "label": "Deployment Verification",
+        "data": {
+          "dependencies_installed": "✅ fastapi, uvicorn, pydantic installed",
+          "import_success": "✅ porta.py imports without errors",
+          "server_startup": "✅ Server starts on http://0.0.0.0:5000",
+          "api_responses": "✅ GET / returns correct JSON",
+          "command_execution": "✅ POST /run_bash executes commands correctly"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "error_handling",
+      "attributes": {
+        "id": "error_handling",
+        "type": "Feature",
+        "label": "Error Handling",
+        "data": {
+          "timeout_handling": "408 status for timeout",
+          "general_errors": "500 status for execution errors",
+          "logging": "Command execution logging"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.212Z",
+          "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "error_handling_implementation",
+      "attributes": {
+        "id": "error_handling_implementation",
+        "type": "CodeImplementation",
+        "label": "Error Handling Implementation",
+        "data": {
+          "timeout_exception": "TimeoutExpired -> HTTP 408",
+          "general_exception": "Exception -> HTTP 500",
+          "logging": "logger.info for commands, logger.error for errors",
+          "try_catch_structure": "Wrapped in try-except blocks"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.827Z",
+          "lastModified": "2025-07-31T10:16:16.827Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "fastapi_framework",
+      "attributes": {
+        "id": "fastapi_framework",
+        "type": "Technology",
+        "label": "FastAPI Framework",
+        "data": {
+          "version": "0.116.1",
+          "purpose": "Web framework for building APIs",
+          "features": [
+            "automatic_documentation",
+            "type_validation",
+            "async_support"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.212Z",
+          "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "file_operations_feature",
+      "attributes": {
+        "id": "file_operations_feature",
+        "type": "Feature",
+        "label": "File Operations Feature",
+        "data": {
+          "endpoint": "/write_file",
+          "method": "POST",
+          "input": "path and content fields",
+          "output": "success, message, path",
+          "capabilities": "Create files, update files, create directories",
+          "security": "Path validation and safe file operations"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.476Z",
+          "lastModified": "2025-07-31T10:20:41.476Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "file_security_measures",
+      "attributes": {
+        "id": "file_security_measures",
+        "type": "Security",
+        "label": "File Security Measures",
+        "data": {
+          "path_validation": "Prevents access to /etc, /dev, and .. traversal",
+          "relative_paths": "Files written relative to current directory",
+          "directory_creation": "Safe directory creation with exist_ok",
+          "encoding": "UTF-8 encoding for proper text handling"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.476Z",
+          "lastModified": "2025-07-31T10:20:41.476Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "file_structure",
+      "attributes": {
+        "id": "file_structure",
+        "type": "ProjectStructure",
+        "label": "File Structure",
+        "data": {
+          "root_files": [
+            "porta.py",
+            "requirements.txt",
+            "readme.md"
+          ],
+          "main_file": "porta.py (entry point)",
+          "dependencies": "requirements.txt",
+          "documentation": "readme.md"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.827Z",
+          "lastModified": "2025-07-31T10:16:16.827Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "file_write_implementation",
+      "attributes": {
+        "id": "file_write_implementation",
+        "type": "CodeImplementation",
+        "label": "File Write Implementation",
+        "data": {
+          "path_validation": "Checks for .., /etc, /dev in paths",
+          "directory_creation": "os.makedirs with exist_ok=True",
+          "file_writing": "open with utf-8 encoding",
+          "error_handling": "HTTP 400 for invalid paths, HTTP 500 for system errors",
+          "logging": "logger.info for file operations"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.476Z",
+          "lastModified": "2025-07-31T10:20:41.476Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "file_write_request_model",
+      "attributes": {
+        "id": "file_write_request_model",
+        "type": "DataModel",
+        "label": "FileWriteRequest Model",
+        "data": {
+          "class": "FileWriteRequest",
+          "inherits": "BaseModel",
+          "fields": {
+            "path": "str",
+            "content": "str"
+          },
+          "validation": "Pydantic automatic validation"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.476Z",
+          "lastModified": "2025-07-31T10:20:41.476Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "future_considerations",
+      "attributes": {
+        "id": "future_considerations",
+        "type": "Future",
+        "label": "Future Considerations",
+        "data": {
+          "authentication": "Could add API key authentication",
+          "rate_limiting": "Could add rate limiting for commands",
+          "command_whitelist": "Could add allowed command whitelist",
+          "monitoring": "Could add more detailed monitoring",
+          "scaling": "Could add load balancing for multiple agents"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "key_improvements",
+      "attributes": {
+        "id": "key_improvements",
+        "type": "Improvements",
+        "label": "Key Improvements Made",
+        "data": {
+          "timeout_protection": "Added 30 second timeout to prevent hanging commands",
+          "error_handling": "Added proper HTTP error responses (408, 500)",
+          "logging": "Added command execution logging for debugging",
+          "success_field": "Added success boolean field in response",
+          "version_info": "Added version field in API description",
+          "documentation": "Complete readme.md with examples and security warnings",
+          "file_operations": "Added /write_file endpoint for safe file creation and updates",
+          "path_validation": "Added security validation for file paths",
+          "directory_creation": "Added automatic directory creation for nested paths"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:20:47.360Z",
+          "version": 2
+        }
+      }
+    },
+    {
+      "key": "logging_setup",
+      "attributes": {
+        "id": "logging_setup",
+        "type": "CodeImplementation",
+        "label": "Logging Setup",
+        "data": {
+          "basic_config": "logging.basicConfig(level=logging.INFO)",
+          "logger": "logger = logging.getLogger(__name__)",
+          "usage": "logger.info for commands, logger.error for errors"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.827Z",
+          "lastModified": "2025-07-31T10:16:16.827Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "main_app_structure",
+      "attributes": {
+        "id": "main_app_structure",
+        "type": "CodeStructure",
+        "label": "Main Application Structure",
+        "data": {
+          "imports": [
+            "fastapi",
+            "pydantic",
+            "subprocess",
+            "uvicorn",
+            "logging"
+          ],
+          "app_creation": "FastAPI(title=\"Porta MCP\", description=\"Локальный интерфейс для агентов\")",
+          "server_config": "uvicorn.run(app, host=\"0.0.0.0\", port=5000)"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.827Z",
+          "lastModified": "2025-07-31T10:16:16.827Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "original_issues",
+      "attributes": {
+        "id": "original_issues",
+        "type": "Issues",
+        "label": "Original Issues Found",
+        "data": {
+          "missing_pydantic": "requirements.txt missing pydantic dependency",
+          "no_error_handling": "No timeout or exception handling",
+          "no_logging": "No logging for command execution",
+          "minimal_documentation": "readme.md was almost empty",
+          "no_security_warnings": "No security considerations mentioned"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "porta_project",
+      "attributes": {
+        "id": "porta_project",
+        "type": "Project",
+        "label": "Porta MCP Server",
+        "data": {
+          "description": "Локальный MCP-сервер для безопасного взаимодействия агентных ИИ с системой",
+          "version": "1.1.0",
+          "status": "active",
+          "architecture": "FastAPI + Uvicorn",
+          "port": 5000,
+          "host": "0.0.0.0",
+          "features": [
+            "bash_command_execution",
+            "file_operations",
+            "api_documentation",
+            "error_handling",
+            "security_validation"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.212Z",
+          "lastModified": "2025-07-31T10:20:51.976Z",
+          "version": 2
+        }
+      }
+    },
+    {
+      "key": "porta_py",
+      "attributes": {
+        "id": "porta_py",
+        "type": "File",
+        "label": "porta.py",
+        "data": {
+          "path": "porta.py",
+          "type": "main_entry",
+          "framework": "FastAPI",
+          "features": [
+            "GET / endpoint",
+            "POST /run_bash endpoint",
+            "POST /write_file endpoint",
+            "error_handling",
+            "timeout_protection",
+            "logging",
+            "file_operations",
+            "path_validation"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.212Z",
+          "lastModified": "2025-07-31T10:20:55.762Z",
+          "version": 2
+        }
+      }
+    },
+    {
+      "key": "project_goals",
+      "attributes": {
+        "id": "project_goals",
+        "type": "Goals",
+        "label": "Project Goals Achieved",
+        "data": {
+          "mcp_server": "✅ Local MCP server for AI agents",
+          "bash_execution": "✅ Safe bash command execution",
+          "api_interface": "✅ RESTful API interface",
+          "error_handling": "✅ Proper error handling and logging",
+          "documentation": "✅ Complete documentation and examples"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "pydantic_validation",
+      "attributes": {
+        "id": "pydantic_validation",
+        "type": "Technology",
+        "label": "Pydantic Validation",
+        "data": {
+          "version": "2.8.2",
+          "purpose": "Data validation using Python type annotations",
+          "features": [
+            "automatic_validation",
+            "serialization"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.212Z",
+          "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "readme_md",
+      "attributes": {
+        "id": "readme_md",
+        "type": "File",
+        "label": "readme.md",
+        "data": {
+          "path": "readme.md",
+          "type": "documentation",
+          "content": "Complete project documentation with API examples and security warnings"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.212Z",
+          "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "requirements_txt",
+      "attributes": {
+        "id": "requirements_txt",
+        "type": "File",
+        "label": "requirements.txt",
+        "data": {
+          "path": "requirements.txt",
+          "dependencies": [
+            "fastapi",
+            "uvicorn",
+            "pydantic"
+          ],
+          "purpose": "Python dependencies"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.212Z",
+          "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "root_endpoint",
+      "attributes": {
+        "id": "root_endpoint",
+        "type": "Endpoint",
+        "label": "GET / Endpoint",
+        "data": {
+          "method": "GET",
+          "path": "/",
+          "purpose": "API documentation",
+          "response": {
+            "name": "Porta MCP",
+            "description": "Локальный интерфейс для агентов",
+            "version": "1.0.0",
+            "methods": "Array of available endpoints"
+          }
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.827Z",
+          "lastModified": "2025-07-31T10:16:16.827Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "security_considerations",
+      "attributes": {
+        "id": "security_considerations",
+        "type": "Security",
+        "label": "Security Considerations",
+        "data": {
+          "command_execution": "Executes arbitrary bash commands",
+          "timeout_protection": "30 second timeout prevents hanging",
+          "subprocess_isolation": "Uses subprocess.run with timeout",
+          "trust_requirement": "Should only be used in trusted environment",
+          "warning_included": "Security warning in readme.md"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "security_measures",
+      "attributes": {
+        "id": "security_measures",
+        "type": "Security",
+        "label": "Security Measures",
+        "data": {
+          "timeout_protection": "30 second timeout",
+          "subprocess_isolation": "shell=True with timeout",
+          "error_isolation": "Exception handling",
+          "warning": "Use only in trusted environment"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.212Z",
+          "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "security_measures_implemented",
+      "attributes": {
+        "id": "security_measures_implemented",
+        "type": "Security",
+        "label": "Security Measures Implemented",
+        "data": {
+          "timeout_limitation": "30 second timeout prevents infinite loops",
+          "subprocess_isolation": "Uses subprocess.run with proper parameters",
+          "error_isolation": "Exception handling prevents server crashes",
+          "input_validation": "Pydantic validates input data",
+          "logging_trail": "Command execution logging for audit trail"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "subprocess_execution",
+      "attributes": {
+        "id": "subprocess_execution",
+        "type": "CodeImplementation",
+        "label": "Subprocess Execution",
+        "data": {
+          "command": "run(command.cmd, shell=True, stdout=PIPE, stderr=PIPE, text=True, timeout=30)",
+          "capture": "stdout and stderr captured",
+          "timeout": "30 second timeout",
+          "text_mode": "text=True for string output"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "testing_results",
+      "attributes": {
+        "id": "testing_results",
+        "type": "Test",
+        "label": "Testing Results",
+        "data": {
+          "server_startup": "✅ Success",
+          "get_endpoint": "✅ Returns correct JSON",
+          "post_endpoint": "✅ Executes commands correctly",
+          "error_handling": "✅ Timeout and exception handling works"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.212Z",
+          "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "testing_strategy",
+      "attributes": {
+        "id": "testing_strategy",
+        "type": "Testing",
+        "label": "Testing Strategy",
+        "data": {
+          "import_test": "python3 -c \"import porta; print('✅ porta.py импортируется успешно')\"",
+          "server_startup_test": "timeout 5 python3 porta.py",
+          "api_endpoint_test": "curl GET / for API description",
+          "command_execution_test": "curl POST /run_bash with echo command",
+          "background_testing": "python3 porta.py & for background testing"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "uvicorn_server",
+      "attributes": {
+        "id": "uvicorn_server",
+        "type": "Technology",
+        "label": "Uvicorn Server",
+        "data": {
+          "version": "0.33.0",
+          "purpose": "ASGI server for running FastAPI applications",
+          "features": [
+            "high_performance",
+            "websocket_support"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.212Z",
+          "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "write_file_endpoint",
+      "attributes": {
+        "id": "write_file_endpoint",
+        "type": "Endpoint",
+        "label": "POST /write_file Endpoint",
+        "data": {
+          "method": "POST",
+          "path": "/write_file",
+          "input_model": "FileWriteRequest(path: str, content: str)",
+          "purpose": "Create or update files on disk",
+          "security": "Path validation and directory creation",
+          "response": {
+            "success": "boolean",
+            "message": "string",
+            "path": "string"
+          }
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.476Z",
+          "lastModified": "2025-07-31T10:20:41.476Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "write_file_testing",
+      "attributes": {
+        "id": "write_file_testing",
+        "type": "Testing",
+        "label": "Write File Testing Results",
+        "data": {
+          "successful_write": "✅ test_hello.txt created successfully",
+          "subdirectory_creation": "✅ notes/info.txt created with directory",
+          "invalid_path_rejection": "✅ /etc/test.txt rejected with HTTP 400",
+          "api_documentation": "✅ write_file appears in GET / response"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.476Z",
+          "lastModified": "2025-07-31T10:20:41.476Z",
+          "version": 1
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "key": "geid_51_0",
+      "source": "api_testing",
+      "target": "curl_examples",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_0",
+      "source": "bash_command_execution",
+      "target": "security_measures",
+      "attributes": {
+        "relationshipType": "REQUIRES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.212Z",
+          "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_1",
+      "source": "bash_endpoint",
+      "target": "bash_command_model",
+      "attributes": {
+        "relationshipType": "USES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_2",
+      "source": "bash_endpoint",
+      "target": "error_handling_implementation",
+      "attributes": {
+        "relationshipType": "USES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_3",
+      "source": "bash_endpoint",
+      "target": "subprocess_execution",
+      "attributes": {
+        "relationshipType": "USES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_4",
+      "source": "deployment_commands",
+      "target": "curl_examples",
+      "attributes": {
+        "relationshipType": "PROVIDES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_1",
+      "source": "deployment_instructions",
+      "target": "testing_results",
+      "attributes": {
+        "relationshipType": "VALIDATES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_2",
+      "source": "error_handling",
+      "target": "security_measures",
+      "attributes": {
+        "relationshipType": "ENHANCES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_55_0",
+      "source": "file_operations_feature",
+      "target": "file_security_measures",
+      "attributes": {
+        "relationshipType": "REQUIRES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.477Z",
+          "lastModified": "2025-07-31T10:20:41.477Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_55_1",
+      "source": "file_operations_feature",
+      "target": "write_file_endpoint",
+      "attributes": {
+        "relationshipType": "IMPLEMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.477Z",
+          "lastModified": "2025-07-31T10:20:41.477Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_55_2",
+      "source": "file_write_implementation",
+      "target": "file_security_measures",
+      "attributes": {
+        "relationshipType": "IMPLEMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.477Z",
+          "lastModified": "2025-07-31T10:20:41.477Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_0",
+      "source": "key_improvements",
+      "target": "original_issues",
+      "attributes": {
+        "relationshipType": "FIXES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_5",
+      "source": "porta_project",
+      "target": "api_testing",
+      "attributes": {
+        "relationshipType": "VALIDATED_BY",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_1",
+      "source": "porta_project",
+      "target": "code_quality",
+      "attributes": {
+        "relationshipType": "DEMONSTRATES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_6",
+      "source": "porta_project",
+      "target": "dependencies_list",
+      "attributes": {
+        "relationshipType": "REQUIRES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_7",
+      "source": "porta_project",
+      "target": "deployment_commands",
+      "attributes": {
+        "relationshipType": "USES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_2",
+      "source": "porta_project",
+      "target": "deployment_verification",
+      "attributes": {
+        "relationshipType": "CONFIRMED_BY",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_55_3",
+      "source": "porta_project",
+      "target": "file_operations_feature",
+      "attributes": {
+        "relationshipType": "HAS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.477Z",
+          "lastModified": "2025-07-31T10:20:41.477Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_8",
+      "source": "porta_project",
+      "target": "file_structure",
+      "attributes": {
+        "relationshipType": "HAS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_3",
+      "source": "porta_project",
+      "target": "future_considerations",
+      "attributes": {
+        "relationshipType": "COULD_EXTEND",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_4",
+      "source": "porta_project",
+      "target": "key_improvements",
+      "attributes": {
+        "relationshipType": "BENEFITS_FROM",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_5",
+      "source": "porta_project",
+      "target": "original_issues",
+      "attributes": {
+        "relationshipType": "ADDRESSES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_3",
+      "source": "porta_project",
+      "target": "porta_py",
+      "attributes": {
+        "relationshipType": "CONTAINS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_6",
+      "source": "porta_project",
+      "target": "project_goals",
+      "attributes": {
+        "relationshipType": "ACHIEVES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_4",
+      "source": "porta_project",
+      "target": "readme_md",
+      "attributes": {
+        "relationshipType": "CONTAINS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_5",
+      "source": "porta_project",
+      "target": "requirements_txt",
+      "attributes": {
+        "relationshipType": "CONTAINS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_9",
+      "source": "porta_project",
+      "target": "security_considerations",
+      "attributes": {
+        "relationshipType": "CONSIDERS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_7",
+      "source": "porta_project",
+      "target": "security_measures_implemented",
+      "attributes": {
+        "relationshipType": "IMPLEMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_8",
+      "source": "porta_project",
+      "target": "testing_strategy",
+      "attributes": {
+        "relationshipType": "VALIDATED_BY",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_6",
+      "source": "porta_py",
+      "target": "api_documentation",
+      "attributes": {
+        "relationshipType": "IMPLEMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_7",
+      "source": "porta_py",
+      "target": "bash_command_execution",
+      "attributes": {
+        "relationshipType": "IMPLEMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_10",
+      "source": "porta_py",
+      "target": "bash_command_model",
+      "attributes": {
+        "relationshipType": "DEFINES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_11",
+      "source": "porta_py",
+      "target": "bash_endpoint",
+      "attributes": {
+        "relationshipType": "CONTAINS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_8",
+      "source": "porta_py",
+      "target": "error_handling",
+      "attributes": {
+        "relationshipType": "IMPLEMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_12",
+      "source": "porta_py",
+      "target": "error_handling_implementation",
+      "attributes": {
+        "relationshipType": "IMPLEMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_9",
+      "source": "porta_py",
+      "target": "fastapi_framework",
+      "attributes": {
+        "relationshipType": "USES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_55_4",
+      "source": "porta_py",
+      "target": "file_write_implementation",
+      "attributes": {
+        "relationshipType": "IMPLEMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.477Z",
+          "lastModified": "2025-07-31T10:20:41.477Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_55_5",
+      "source": "porta_py",
+      "target": "file_write_request_model",
+      "attributes": {
+        "relationshipType": "DEFINES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.477Z",
+          "lastModified": "2025-07-31T10:20:41.477Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_13",
+      "source": "porta_py",
+      "target": "logging_setup",
+      "attributes": {
+        "relationshipType": "IMPLEMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_14",
+      "source": "porta_py",
+      "target": "main_app_structure",
+      "attributes": {
+        "relationshipType": "IMPLEMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_10",
+      "source": "porta_py",
+      "target": "pydantic_validation",
+      "attributes": {
+        "relationshipType": "USES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_15",
+      "source": "porta_py",
+      "target": "root_endpoint",
+      "attributes": {
+        "relationshipType": "CONTAINS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_11",
+      "source": "porta_py",
+      "target": "security_measures",
+      "attributes": {
+        "relationshipType": "IMPLEMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_51_16",
+      "source": "porta_py",
+      "target": "subprocess_execution",
+      "attributes": {
+        "relationshipType": "IMPLEMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:16.828Z",
+          "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_12",
+      "source": "porta_py",
+      "target": "uvicorn_server",
+      "attributes": {
+        "relationshipType": "USES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_55_6",
+      "source": "porta_py",
+      "target": "write_file_endpoint",
+      "attributes": {
+        "relationshipType": "CONTAINS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.477Z",
+          "lastModified": "2025-07-31T10:20:41.477Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_9",
+      "source": "project_goals",
+      "target": "deployment_verification",
+      "attributes": {
+        "relationshipType": "CONFIRMED_BY",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_13",
+      "source": "readme_md",
+      "target": "deployment_instructions",
+      "attributes": {
+        "relationshipType": "DOCUMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_14",
+      "source": "requirements_txt",
+      "target": "fastapi_framework",
+      "attributes": {
+        "relationshipType": "DEPENDS_ON",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_15",
+      "source": "requirements_txt",
+      "target": "pydantic_validation",
+      "attributes": {
+        "relationshipType": "DEPENDS_ON",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_50_16",
+      "source": "requirements_txt",
+      "target": "uvicorn_server",
+      "attributes": {
+        "relationshipType": "DEPENDS_ON",
+        "metadata": {
+          "createdAt": "2025-07-31T10:15:50.213Z",
+          "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_10",
+      "source": "security_measures_implemented",
+      "target": "original_issues",
+      "attributes": {
+        "relationshipType": "ADDRESSES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_52_11",
+      "source": "testing_strategy",
+      "target": "deployment_verification",
+      "attributes": {
+        "relationshipType": "VALIDATES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:16:40.066Z",
+          "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_55_7",
+      "source": "write_file_endpoint",
+      "target": "file_write_implementation",
+      "attributes": {
+        "relationshipType": "USES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.477Z",
+          "lastModified": "2025-07-31T10:20:41.477Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_55_8",
+      "source": "write_file_endpoint",
+      "target": "file_write_request_model",
+      "attributes": {
+        "relationshipType": "USES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.477Z",
+          "lastModified": "2025-07-31T10:20:41.477Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_55_9",
+      "source": "write_file_testing",
+      "target": "file_operations_feature",
+      "attributes": {
+        "relationshipType": "VALIDATES",
+        "metadata": {
+          "createdAt": "2025-07-31T10:20:41.477Z",
+          "lastModified": "2025-07-31T10:20:41.477Z",
+          "version": 1
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "lastSaved": "2025-07-31T10:20:55.762Z",
+    "nodeCount": 40,
+    "edgeCount": 56,
+    "version": 1
+  }
+}
