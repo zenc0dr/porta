@@ -4,6 +4,12 @@
       "command": "node",
       "args": ["./mcp/memory_bank_engine/dist/memory-bank.js"],
       "env": { "MEMORY_BASE_PATH": "./memory-bank-data" }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+      "@playwright/mcp@latest"
+      ]
     }
   }
 }

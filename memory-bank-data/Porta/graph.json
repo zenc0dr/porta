@@ -45,6 +45,28 @@
       }
     },
     {
+      "key": "background_processes",
+      "attributes": {
+        "id": "background_processes",
+        "type": "Pattern",
+        "label": "Background Process Management",
+        "data": {
+          "tools": [
+            "porta-server.sh",
+            "nohup",
+            "&"
+          ],
+          "monitoring": "ps aux | grep",
+          "termination": "kill -9 <pid>"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T12:32:26.915Z",
+          "lastModified": "2025-07-31T12:32:26.915Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "bash_command_execution",
       "attributes": {
         "id": "bash_command_execution",
@@ -230,6 +252,31 @@
       }
     },
     {
+      "key": "development_lessons",
+      "attributes": {
+        "id": "development_lessons",
+        "type": "Experience",
+        "label": "Development Lessons Learned",
+        "data": {
+          "key_insights": [
+            "ask_for_help_when_stuck",
+            "understand_ecosystem_not_just_code",
+            "debug_systematically",
+            "trust_the_process"
+          ],
+          "growth_moments": [
+            "transition_from_coder_to_engineer",
+            "learning_to_debug_holistically"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "error_handling",
       "attributes": {
         "id": "error_handling",
@@ -267,6 +314,59 @@
       }
     },
     {
+      "key": "error_handling_patterns",
+      "attributes": {
+        "id": "error_handling_patterns",
+        "type": "Pattern",
+        "label": "Error Handling Patterns",
+        "data": {
+          "http_codes": {
+            "400": "Bad Request - invalid path",
+            "404": "Not Found - file/directory missing",
+            "500": "Internal Server Error - system issues"
+          },
+          "logging_levels": [
+            "info",
+            "error"
+          ],
+          "exception_types": [
+            "PermissionError",
+            "UnicodeDecodeError",
+            "TimeoutExpired"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "external_access",
+      "attributes": {
+        "id": "external_access",
+        "type": "Feature",
+        "label": "External Access via ngrok",
+        "data": {
+          "port": 8111,
+          "tool": "ngrok",
+          "command": "ngrok http 8111",
+          "status": "implemented",
+          "benefits": [
+            "public_access",
+            "temporary_urls",
+            "tunnel_creation"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T12:32:26.915Z",
+          "lastModified": "2025-07-31T12:32:26.915Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "fastapi_framework",
       "attributes": {
         "id": "fastapi_framework",
@@ -284,6 +384,32 @@
         "metadata": {
           "createdAt": "2025-07-31T10:15:50.212Z",
           "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "file_operations",
+      "attributes": {
+        "id": "file_operations",
+        "type": "Feature",
+        "label": "File Operations Suite",
+        "data": {
+          "endpoints": [
+            "/read_file",
+            "/write_file",
+            "/list_dir",
+            "/run_bash"
+          ],
+          "common_patterns": [
+            "path_validation",
+            "absolute_path_resolution",
+            "encoding_handling"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
           "version": 1
         }
       }
@@ -438,6 +564,35 @@
       }
     },
     {
+      "key": "list_dir_endpoint",
+      "attributes": {
+        "id": "list_dir_endpoint",
+        "type": "Feature",
+        "label": "List Directory Endpoint",
+        "data": {
+          "status": "implemented",
+          "endpoint": "/list_dir",
+          "method": "POST",
+          "parameters": {
+            "path": "string",
+            "include_hidden": "boolean"
+          },
+          "features": [
+            "security_checks",
+            "hidden_file_filtering",
+            "sorting",
+            "logging",
+            "error_handling"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "logging_setup",
       "attributes": {
         "id": "logging_setup",
@@ -475,6 +630,58 @@
         "metadata": {
           "createdAt": "2025-07-31T10:16:16.827Z",
           "lastModified": "2025-07-31T10:16:16.827Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "network_concepts",
+      "attributes": {
+        "id": "network_concepts",
+        "type": "Knowledge",
+        "label": "Network Address Concepts",
+        "data": {
+          "address_types": {
+            "localhost": "127.0.0.1",
+            "all_interfaces": "0.0.0.0",
+            "public": "external_ip"
+          },
+          "port_management": "sudo lsof -i :<port>",
+          "security_considerations": [
+            "authorization",
+            "access_limitation",
+            "temporary_tokens"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T12:32:26.915Z",
+          "lastModified": "2025-07-31T12:32:26.915Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "ngrok_knowledge",
+      "attributes": {
+        "id": "ngrok_knowledge",
+        "type": "Knowledge",
+        "label": "Ngrok Understanding",
+        "data": {
+          "purpose": "tunnel_creation",
+          "concepts": [
+            "port_forwarding",
+            "temporary_public_urls",
+            "secure_tunneling"
+          ],
+          "use_cases": [
+            "local_service_exposure",
+            "testing_public_access",
+            "agent_communication"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T12:32:26.915Z",
+          "lastModified": "2025-07-31T12:32:26.915Z",
           "version": 1
         }
       }
@@ -556,6 +763,33 @@
       }
     },
     {
+      "key": "porta_server_script",
+      "attributes": {
+        "id": "porta_server_script",
+        "type": "Tool",
+        "label": "Porta Server Management Script",
+        "data": {
+          "file": "porta-server.sh",
+          "commands": [
+            "start",
+            "stop",
+            "restart",
+            "status"
+          ],
+          "features": [
+            "pid_management",
+            "logging",
+            "process_control"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "project_goals",
       "attributes": {
         "id": "project_goals",
@@ -571,6 +805,27 @@
         "metadata": {
           "createdAt": "2025-07-31T10:16:40.066Z",
           "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "public_url_discovery",
+      "attributes": {
+        "id": "public_url_discovery",
+        "type": "Feature",
+        "label": "Public URL Discovery for Agents",
+        "data": {
+          "potential_endpoints": [
+            "GET /meta",
+            "GET /public-url"
+          ],
+          "purpose": "dynamic_agent_discovery",
+          "implementation_status": "planned"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T12:32:26.915Z",
+          "lastModified": "2025-07-31T12:32:26.915Z",
           "version": 1
         }
       }
@@ -681,6 +936,31 @@
       }
     },
     {
+      "key": "security_external",
+      "attributes": {
+        "id": "security_external",
+        "type": "Pattern",
+        "label": "External Access Security",
+        "data": {
+          "concerns": [
+            "unauthorized_access",
+            "rate_limiting",
+            "temporary_access"
+          ],
+          "solutions": [
+            "authentication",
+            "tokens",
+            "time_limits"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T12:32:26.915Z",
+          "lastModified": "2025-07-31T12:32:26.915Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "security_measures",
       "attributes": {
         "id": "security_measures",
@@ -720,6 +1000,34 @@
       }
     },
     {
+      "key": "security_patterns",
+      "attributes": {
+        "id": "security_patterns",
+        "type": "Pattern",
+        "label": "Security Patterns for File Operations",
+        "data": {
+          "checks": [
+            "path_validation",
+            "system_directory_protection",
+            "file_type_verification"
+          ],
+          "restricted_paths": [
+            "/etc",
+            "/dev",
+            "/proc"
+          ],
+          "forbidden_patterns": [
+            ".."
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "subprocess_execution",
       "attributes": {
         "id": "subprocess_execution",
@@ -734,6 +1042,32 @@
         "metadata": {
           "createdAt": "2025-07-31T10:16:16.828Z",
           "lastModified": "2025-07-31T10:16:16.828Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "team_dynamics",
+      "attributes": {
+        "id": "team_dynamics",
+        "type": "Experience",
+        "label": "Team Dynamics and Growth",
+        "data": {
+          "roles": {
+            "Al": "mentor_and_director",
+            "Elia": "architect_and_inspiration",
+            "Raelle": "growing_engineer"
+          },
+          "principles": [
+            "trust_the_process",
+            "ask_for_help",
+            "learn_from_mistakes",
+            "grow_together"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
           "version": 1
         }
       }
@@ -773,6 +1107,28 @@
         "metadata": {
           "createdAt": "2025-07-31T10:16:40.066Z",
           "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "uvicorn_cli_usage",
+      "attributes": {
+        "id": "uvicorn_cli_usage",
+        "type": "Knowledge",
+        "label": "Uvicorn CLI Usage",
+        "data": {
+          "command": "uvicorn porta:app --host 0.0.0.0 --port 8000 --reload",
+          "benefits": [
+            "auto_reload",
+            "proper_module_loading",
+            "development_friendly"
+          ],
+          "vs_direct_python": "More reliable than python3 porta.py"
+        },
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
           "version": 1
         }
       }
@@ -936,6 +1292,19 @@
       }
     },
     {
+      "key": "geid_43_0",
+      "source": "development_lessons",
+      "target": "team_dynamics",
+      "attributes": {
+        "relationshipType": "INFLUENCED_BY",
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_50_2",
       "source": "error_handling",
       "target": "security_measures",
@@ -944,6 +1313,71 @@
         "metadata": {
           "createdAt": "2025-07-31T10:15:50.213Z",
           "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_44_0",
+      "source": "external_access",
+      "target": "background_processes",
+      "attributes": {
+        "relationshipType": "MANAGED_BY",
+        "metadata": {
+          "createdAt": "2025-07-31T12:32:26.915Z",
+          "lastModified": "2025-07-31T12:32:26.915Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_44_1",
+      "source": "external_access",
+      "target": "network_concepts",
+      "attributes": {
+        "relationshipType": "REQUIRES",
+        "metadata": {
+          "createdAt": "2025-07-31T12:32:26.915Z",
+          "lastModified": "2025-07-31T12:32:26.915Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_44_2",
+      "source": "external_access",
+      "target": "ngrok_knowledge",
+      "attributes": {
+        "relationshipType": "USES",
+        "metadata": {
+          "createdAt": "2025-07-31T12:32:26.948Z",
+          "lastModified": "2025-07-31T12:32:26.948Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_44_3",
+      "source": "external_access",
+      "target": "security_external",
+      "attributes": {
+        "relationshipType": "REQUIRES",
+        "metadata": {
+          "createdAt": "2025-07-31T12:32:26.948Z",
+          "lastModified": "2025-07-31T12:32:26.948Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_43_1",
+      "source": "file_operations",
+      "target": "security_patterns",
+      "attributes": {
+        "relationshipType": "REQUIRES",
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
           "version": 1
         }
       }
@@ -996,6 +1430,71 @@
         "metadata": {
           "createdAt": "2025-07-31T10:16:40.066Z",
           "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_43_2",
+      "source": "list_dir_endpoint",
+      "target": "development_lessons",
+      "attributes": {
+        "relationshipType": "REPRESENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_43_3",
+      "source": "list_dir_endpoint",
+      "target": "error_handling_patterns",
+      "attributes": {
+        "relationshipType": "USES",
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_43_4",
+      "source": "list_dir_endpoint",
+      "target": "file_operations",
+      "attributes": {
+        "relationshipType": "PART_OF",
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_43_5",
+      "source": "list_dir_endpoint",
+      "target": "security_patterns",
+      "attributes": {
+        "relationshipType": "IMPLEMENTS",
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_44_4",
+      "source": "ngrok_knowledge",
+      "target": "network_concepts",
+      "attributes": {
+        "relationshipType": "BUILDS_ON",
+        "metadata": {
+          "createdAt": "2025-07-31T12:32:26.948Z",
+          "lastModified": "2025-07-31T12:32:26.948Z",
           "version": 1
         }
       }
@@ -1443,6 +1942,19 @@
       }
     },
     {
+      "key": "geid_43_6",
+      "source": "porta_server_script",
+      "target": "uvicorn_cli_usage",
+      "attributes": {
+        "relationshipType": "MANAGES",
+        "metadata": {
+          "createdAt": "2025-07-31T12:01:10.215Z",
+          "lastModified": "2025-07-31T12:01:10.215Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_52_9",
       "source": "project_goals",
       "target": "deployment_verification",
@@ -1451,6 +1963,19 @@
         "metadata": {
           "createdAt": "2025-07-31T10:16:40.066Z",
           "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_44_5",
+      "source": "public_url_discovery",
+      "target": "external_access",
+      "attributes": {
+        "relationshipType": "ENHANCES",
+        "metadata": {
+          "createdAt": "2025-07-31T12:32:26.948Z",
+          "lastModified": "2025-07-31T12:32:26.948Z",
           "version": 1
         }
       }
@@ -1574,9 +2099,9 @@
     }
   ],
   "metadata": {
-    "lastSaved": "2025-07-31T10:20:55.762Z",
-    "nodeCount": 40,
-    "edgeCount": 56,
+    "lastSaved": "2025-07-31T12:32:26.952Z",
+    "nodeCount": 54,
+    "edgeCount": 69,
     "version": 1
   }
 }

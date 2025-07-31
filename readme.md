@@ -98,6 +98,40 @@ curl -X POST "http://localhost:5000/read_file" \
 - `404 Not Found` - Файл не существует
 - `500 Internal Server Error` - Системная ошибка чтения файла
 
+### POST /list_dir
+Показывает содержимое папки.
+
+**Параметры:**
+- `path` (string): Путь к папке (абсолютный или относительный)
+- `include_hidden` (boolean): Включать ли скрытые файлы (по умолчанию false)
+
+**Пример:**
+```bash
+curl -X POST "http://localhost:5000/list_dir" \
+     -H "Content-Type: application/json" \
+     -d '{"path": ".", "include_hidden": false}'
+```
+
+**Ответ:**
+```json
+{
+  "success": true,
+  "entries": [
+    {"name": "mcp", "type": "dir"},
+    {"name": "memory-bank-data", "type": "dir"},
+    {"name": "notes", "type": "dir"},
+    {"name": "porta.py", "type": "file"},
+    {"name": "readme.md", "type": "file"}
+  ],
+  "path": "/aum/projects/Porta"
+}
+```
+
+**Обработка ошибок:**
+- `400 Bad Request` - Недопустимый путь или путь не является папкой
+- `404 Not Found` - Папка не существует
+- `500 Internal Server Error` - Системная ошибка чтения папки
+
 ## Безопасность
 
 ⚠️ **Внимание:** Этот сервер выполняет команды в системе и записывает файлы. Используйте только в доверенной среде.

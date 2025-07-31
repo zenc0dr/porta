@@ -39,6 +39,13 @@ def read_root():
                 "endpoint": "/read_file",
                 "method": "POST",
                 "parameters": {"path": "string"}
+            },
+            {
+                "name": "list_dir",
+                "description": "Показывает содержимое папки",
+                "endpoint": "/list_dir",
+                "method": "POST",
+                "parameters": {"path": "string", "include_hidden": "boolean"}
             }
         ]
     }
@@ -55,6 +62,11 @@ class FileWriteRequest(BaseModel):
 
 class FileReadRequest(BaseModel):
     path: str
+
+
+class DirListRequest(BaseModel):
+    path: str
+    include_hidden: bool = False
 
 
 @app.post("/run_bash")
@@ -175,6 +187,69 @@ def read_file(req: FileReadRequest):
     except Exception as e:
         logger.error(f"Ошибка чтения файла: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Ошибка чтения файла: {str(e)}")
+
+
+@app.post("/list_dir")
+def list_dir(req: DirListRequest):
+    try:
+        logger.info(f"Чтение содержимого папки: {req.path}")
+        
+        # Проверка безопасности пути
+        if ".." in req.path or req.path.startswith("/etc") or req.path.startswith("/dev") or req.path.startswith("/proc"):
+            logger.error(f"Недопустимый путь: {req.path}")
+            raise HTTPException(status_code=400, detail="Недопустимый путь")
+        
+        # Получаем абсолютный путь
+        full_path = os.path.abspath(req.path)
+        
+        # Проверяем существование директории
+        if not os.path.exists(full_path):
+            logger.error(f"Папка не существует: {full_path}")
+            raise HTTPException(status_code=404, detail="Папка не найдена")
+        
+        # Проверяем, что это директория, а не файл
+        if not os.path.isdir(full_path):
+            logger.error(f"Путь не является папкой: {full_path}")
+            raise HTTPException(status_code=400, detail="Указанный путь не является папкой")
+        
+        # Читаем содержимое директории
+        try:
+            entries = []
+            for item in os.listdir(full_path):
+                # Пропускаем скрытые файлы, если не запрошены
+                if not req.include_hidden and item.startswith('.'):
+                    continue
+                
+                item_path = os.path.join(full_path, item)
+                entry_type = "dir" if os.path.isdir(item_path) else "file"
+                
+                entries.append({
+                    "name": item,
+                    "type": entry_type
+                })
+            
+            # Сортируем: сначала папки, потом файлы, по алфавиту
+            entries.sort(key=lambda x: (x["type"] != "dir", x["name"].lower()))
+            
+            logger.info(f"Папка успешно прочитана: {full_path}, найдено {len(entries)} элементов")
+            
+            return {
+                "success": True,
+                "entries": entries,
+                "path": full_path
+            }
+            
+        except PermissionError:
+            logger.error(f"Нет прав на чтение папки: {full_path}")
+            raise HTTPException(status_code=500, detail="Нет прав на чтение папки")
+        
+    except HTTPException:
+        # Перебрасываем HTTP исключения как есть
+        raise
+        
+    except Exception as e:
+        logger.error(f"Ошибка чтения папки: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Ошибка чтения папки: {str(e)}")
 
 
 if __name__ == "__main__":
