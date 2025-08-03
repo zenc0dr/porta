@@ -1,7 +1,0 @@
-INFO:porta:База данных агентов инициализирована
-INFO:     Started server process [84923]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-ERROR:    [Errno 98] error while attempting to bind on address ('0.0.0.0', 8111): address already in use
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
