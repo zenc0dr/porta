@@ -26,6 +26,8 @@ start_server() {
     if [ -n "$NGROK_PUBLIC_URL" ]; then
         echo "$NGROK_PUBLIC_URL" > "$NGROK_URL_FILE"
         echo "✅ MCP доступен по адресу: $NGROK_PUBLIC_URL"
+        echo "💡 Примечание: При первом посещении может появиться предупреждение ngrok"
+        echo "   Просто нажмите 'Visit Site' для продолжения"
     else
         echo "⚠️ Не удалось получить URL от ngrok. Возможно, он ещё инициализируется."
     fi
@@ -33,13 +35,47 @@ start_server() {
 
 stop_server() {
     echo "🛑 Остановка Porta и ngrok..."
+    
+    # Остановка uvicorn
     if [ -f "$UVICORN_PID_FILE" ]; then
-        kill -9 $(cat "$UVICORN_PID_FILE") 2>/dev/null && rm "$UVICORN_PID_FILE"
+        PID=$(cat "$UVICORN_PID_FILE")
+        if ps -p $PID > /dev/null 2>&1; then
+            kill -9 $PID 2>/dev/null
+            echo "✅ Porta остановлен (PID $PID)"
+        else
+            echo "⚠️ Porta уже не запущен"
+        fi
+        rm -f "$UVICORN_PID_FILE"
+    else
+        # Попробуем найти процесс по имени
+        PIDS=$(pgrep -f "uvicorn porta:app")
+        if [ -n "$PIDS" ]; then
+            echo $PIDS | xargs kill -9 2>/dev/null
+            echo "✅ Porta остановлен (найден по имени)"
+        fi
     fi
+    
+    # Остановка ngrok
     if [ -f "$NGROK_PID_FILE" ]; then
-        kill -9 $(cat "$NGROK_PID_FILE") 2>/dev/null && rm "$NGROK_PID_FILE"
+        PID=$(cat "$NGROK_PID_FILE")
+        if ps -p $PID > /dev/null 2>&1; then
+            kill -9 $PID 2>/dev/null
+            echo "✅ ngrok остановлен (PID $PID)"
+        else
+            echo "⚠️ ngrok уже не запущен"
+        fi
+        rm -f "$NGROK_PID_FILE"
+    else
+        # Попробуем найти процесс по имени
+        PIDS=$(pgrep -f "ngrok http 8111")
+        if [ -n "$PIDS" ]; then
+            echo $PIDS | xargs kill -9 2>/dev/null
+            echo "✅ ngrok остановлен (найден по имени)"
+        fi
     fi
+    
     rm -f "$NGROK_URL_FILE"
+    echo "🧹 Временные файлы очищены"
 }
 
 status_server() {
@@ -58,6 +94,18 @@ status_server() {
     fi
 }
 
+test_url() {
+    if [ -f "$NGROK_URL_FILE" ]; then
+        URL=$(cat "$NGROK_URL_FILE")
+        echo "🧪 Тестирование URL: $URL"
+        echo "📋 Результат (с пропуском предупреждения ngrok):"
+        curl -H "ngrok-skip-browser-warning: true" -s "$URL" | head -c 200
+        echo -e "\n..."
+    else
+        echo "❌ URL не найден. Запустите сервер сначала."
+    fi
+}
+
 case "$1" in
     start)
         start_server
@@ -73,7 +121,10 @@ case "$1" in
     status)
         status_server
         ;;
+    test)
+        test_url
+        ;;
     *)
-        echo "Использование: $0 {start|stop|restart|status}"
+        echo "Использование: $0 {start|stop|restart|status|test}"
         exit 1
 esac
