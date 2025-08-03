@@ -2,12 +2,14 @@ from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from subprocess import run, PIPE, TimeoutExpired
-from typing import Optional
+from typing import Optional, List, Dict, Any
 from datetime import datetime
 import uvicorn
 import logging
 import os
 import time
+import sqlite3
+import json
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
@@ -18,9 +20,97 @@ app = FastAPI(title="Porta MCP", description="Локальный интерфе�
 # Глобальная переменная для отслеживания времени запуска
 START_TIME = time.time()
 
+# Путь к базе данных агентов
+AGENTS_DB = "agents.db"
+
+def init_agents_db():
+    """Инициализирует базу данных агентов"""
+    try:
+        conn = sqlite3.connect(AGENTS_DB)
+        cursor = conn.cursor()
+        
+        # Таблица агентов
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS agents (
+                id TEXT PRIMARY KEY,
+                name TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                total_operations INTEGER DEFAULT 0,
+                status TEXT DEFAULT 'active'
+            )
+        ''')
+        
+        # Таблица операций агентов
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS agent_operations (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                agent_id TEXT,
+                operation_type TEXT,
+                details TEXT,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                success BOOLEAN DEFAULT TRUE,
+                FOREIGN KEY (agent_id) REFERENCES agents (id)
+            )
+        ''')
+        
+        conn.commit()
+        conn.close()
+        logger.info("База данных агентов инициализирована")
+    except Exception as e:
+        logger.error(f"Ошибка инициализации БД агентов: {e}")
+
+def register_agent(agent_id: str, name: Optional[str] = None):
+    """Регистрирует нового агента или обновляет существующего"""
+    try:
+        conn = sqlite3.connect(AGENTS_DB)
+        cursor = conn.cursor()
+        
+        # Проверяем, существует ли агент
+        cursor.execute("SELECT id FROM agents WHERE id = ?", (agent_id,))
+        exists = cursor.fetchone()
+        
+        if exists:
+            # Обновляем время последнего обращения
+            cursor.execute(
+                "UPDATE agents SET last_seen = CURRENT_TIMESTAMP, total_operations = total_operations + 1 WHERE id = ?",
+                (agent_id,)
+            )
+        else:
+            # Создаем нового агента
+            cursor.execute(
+                "INSERT INTO agents (id, name, created_at, last_seen) VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)",
+                (agent_id, name or agent_id)
+            )
+        
+        conn.commit()
+        conn.close()
+        logger.info(f"Агент {agent_id} зарегистрирован/обновлен")
+    except Exception as e:
+        logger.error(f"Ошибка регистрации агента {agent_id}: {e}")
+
+def log_agent_operation(agent_id: str, operation_type: str, details: Dict[str, Any], success: bool = True):
+    """Логирует операцию агента в базу данных"""
+    try:
+        conn = sqlite3.connect(AGENTS_DB)
+        cursor = conn.cursor()
+        
+        cursor.execute(
+            "INSERT INTO agent_operations (agent_id, operation_type, details, success) VALUES (?, ?, ?, ?)",
+            (agent_id, operation_type, json.dumps(details), success)
+        )
+        
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        logger.error(f"Ошибка логирования операции агента {agent_id}: {e}")
+
 def get_uptime():
     """Возвращает время работы сервера в секундах"""
     return int(time.time() - START_TIME)
+
+# Инициализируем базу данных при запуске
+init_agents_db()
 
 
 @app.middleware("http")
@@ -54,9 +144,14 @@ async def verify_token(request: Request, call_next):
 
 
 def log_agent_call(agent_id: str, method: str, result: dict):
-    """Логирует вызов агента с timestamp"""
+    """Логирует вызов агента с timestamp и в базу данных"""
     timestamp = datetime.now().isoformat()
     logger.info(f"[AGENT] {agent_id} called {method}: {result} at {timestamp}")
+    
+    # Регистрируем агента и логируем операцию
+    if agent_id:
+        register_agent(agent_id)
+        log_agent_operation(agent_id, method, result)
 
 
 @app.get("/")
@@ -64,7 +159,7 @@ def read_root():
     return {
         "name": "Porta MCP",
         "description": "Локальный интерфейс для агентов",
-        "version": "1.2.0",
+        "version": "1.3.0",
         "security": "X-PORTA-TOKEN authentication enabled",
         "methods": [
             {
@@ -101,6 +196,27 @@ def read_root():
                 "endpoint": "/agent/status",
                 "method": "POST",
                 "parameters": {"agent_id": "string"}
+            },
+            {
+                "name": "agent_list",
+                "description": "Список зарегистрированных агентов",
+                "endpoint": "/agent/list",
+                "method": "POST",
+                "parameters": {"limit": "int (optional)", "offset": "int (optional)", "status": "string (optional)"}
+            },
+            {
+                "name": "agent_history",
+                "description": "История операций агента",
+                "endpoint": "/agent/history",
+                "method": "POST",
+                "parameters": {"agent_id": "string", "limit": "int (optional)", "operation_type": "string (optional)"}
+            },
+            {
+                "name": "agent_pipeline",
+                "description": "Выполнение последовательности команд",
+                "endpoint": "/agent/pipeline",
+                "method": "POST",
+                "parameters": {"agent_id": "string", "commands": "array", "timeout": "int (optional)"}
             }
         ]
     }
@@ -111,7 +227,7 @@ def get_meta():
     """Возвращает системную информацию о Porta"""
     return {
         "name": "Porta MCP",
-        "version": "1.2.0",
+        "version": "1.3.0",
         "description": "MCP-драйвер для Linux",
         "uptime": get_uptime(),
         "pid": os.getpid(),
@@ -125,7 +241,10 @@ def get_meta():
             "/write_file", 
             "/read_file", 
             "/list_dir", 
-            "/agent/status"
+            "/agent/status",
+            "/agent/list",
+            "/agent/history",
+            "/agent/pipeline"
         ],
         "timestamp": datetime.now().isoformat()
     }
@@ -185,6 +304,21 @@ class DirListRequest(BaseModel):
 
 class AgentStatusRequest(BaseModel):
     agent_id: str
+
+class AgentListRequest(BaseModel):
+    limit: Optional[int] = 50
+    offset: Optional[int] = 0
+    status: Optional[str] = None
+
+class AgentHistoryRequest(BaseModel):
+    agent_id: str
+    limit: Optional[int] = 20
+    operation_type: Optional[str] = None
+
+class AgentPipelineRequest(BaseModel):
+    agent_id: str
+    commands: List[str]
+    timeout: Optional[int] = 30
 
 
 @app.post("/agent/status")
@@ -408,6 +542,177 @@ def list_dir(req: DirListRequest):
     except Exception as e:
         logger.error(f"Ошибка чтения папки: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Ошибка чтения папки: {str(e)}")
+
+
+@app.post("/agent/list")
+def agent_list(request: AgentListRequest):
+    """Возвращает список зарегистрированных агентов"""
+    try:
+        conn = sqlite3.connect(AGENTS_DB)
+        cursor = conn.cursor()
+        
+        # Формируем запрос с фильтрами
+        query = "SELECT id, name, created_at, last_seen, total_operations, status FROM agents"
+        params = []
+        
+        if request.status:
+            query += " WHERE status = ?"
+            params.append(request.status)
+        
+        query += " ORDER BY last_seen DESC LIMIT ? OFFSET ?"
+        params.extend([request.limit, request.offset])
+        
+        cursor.execute(query, params)
+        agents = []
+        
+        for row in cursor.fetchall():
+            agents.append({
+                "id": row[0],
+                "name": row[1],
+                "created_at": row[2],
+                "last_seen": row[3],
+                "total_operations": row[4],
+                "status": row[5]
+            })
+        
+        conn.close()
+        
+        result = {
+            "success": True,
+            "agents": agents,
+            "total": len(agents),
+            "limit": request.limit,
+            "offset": request.offset
+        }
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Ошибка получения списка агентов: {e}")
+        raise HTTPException(status_code=500, detail=f"Ошибка получения списка агентов: {str(e)}")
+
+
+@app.post("/agent/history")
+def agent_history(request: AgentHistoryRequest):
+    """Возвращает историю операций агента"""
+    try:
+        conn = sqlite3.connect(AGENTS_DB)
+        cursor = conn.cursor()
+        
+        # Формируем запрос с фильтрами
+        query = "SELECT operation_type, details, timestamp, success FROM agent_operations WHERE agent_id = ?"
+        params = [request.agent_id]
+        
+        if request.operation_type:
+            query += " AND operation_type = ?"
+            params.append(request.operation_type)
+        
+        query += " ORDER BY timestamp DESC LIMIT ?"
+        params.append(request.limit)
+        
+        cursor.execute(query, params)
+        operations = []
+        
+        for row in cursor.fetchall():
+            try:
+                details = json.loads(row[1]) if row[1] else {}
+            except:
+                details = {"raw": row[1]}
+            
+            operations.append({
+                "operation_type": row[0],
+                "details": details,
+                "timestamp": row[2],
+                "success": bool(row[3])
+            })
+        
+        conn.close()
+        
+        result = {
+            "success": True,
+            "agent_id": request.agent_id,
+            "operations": operations,
+            "total": len(operations)
+        }
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Ошибка получения истории агента {request.agent_id}: {e}")
+        raise HTTPException(status_code=500, detail=f"Ошибка получения истории агента: {str(e)}")
+
+
+@app.post("/agent/pipeline")
+def agent_pipeline(request: AgentPipelineRequest):
+    """Выполняет последовательность команд для агента"""
+    try:
+        logger.info(f"Выполнение pipeline для агента {request.agent_id}: {len(request.commands)} команд")
+        
+        results = []
+        start_time = time.time()
+        
+        for i, cmd in enumerate(request.commands):
+            try:
+                # Выполняем команду
+                process = run(cmd, shell=True, capture_output=True, text=True, timeout=request.timeout)
+                
+                result = {
+                    "command": cmd,
+                    "index": i,
+                    "success": process.returncode == 0,
+                    "stdout": process.stdout,
+                    "stderr": process.stderr,
+                    "returncode": process.returncode
+                }
+                
+                results.append(result)
+                
+                # Если команда завершилась с ошибкой, останавливаем pipeline
+                if process.returncode != 0:
+                    logger.warning(f"Команда {i+1} завершилась с ошибкой: {cmd}")
+                    break
+                    
+            except TimeoutExpired:
+                logger.error(f"Таймаут команды {i+1}: {cmd}")
+                results.append({
+                    "command": cmd,
+                    "index": i,
+                    "success": False,
+                    "error": "timeout",
+                    "returncode": -1
+                })
+                break
+                
+            except Exception as e:
+                logger.error(f"Ошибка выполнения команды {i+1}: {cmd} - {e}")
+                results.append({
+                    "command": cmd,
+                    "index": i,
+                    "success": False,
+                    "error": str(e),
+                    "returncode": -1
+                })
+                break
+        
+        execution_time = time.time() - start_time
+        
+        response = {
+            "success": all(r["success"] for r in results),
+            "agent_id": request.agent_id,
+            "total_commands": len(request.commands),
+            "executed_commands": len(results),
+            "execution_time": execution_time,
+            "results": results
+        }
+        
+        # Логируем операцию агента
+        log_agent_call(request.agent_id, "pipeline", response)
+        
+        return response
+        
+    except Exception as e:
+        logger.error(f"Ошибка выполнения pipeline для агента {request.agent_id}: {e}")
+        raise HTTPException(status_code=500, detail=f"Ошибка выполнения pipeline: {str(e)}")
 
 
 if __name__ == "__main__":

@@ -1,11 +1,7 @@
-INFO:     Started server process [318142]
+INFO:porta:База данных агентов инициализирована
+INFO:     Started server process [84923]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     Uvicorn running on http://0.0.0.0:8111 (Press CTRL+C to quit)
-WARNING:porta:Попытка доступа без токена: http://localhost:8111/meta
-INFO:     127.0.0.1:40850 - "GET /meta HTTP/1.1" 401 Unauthorized
-INFO:     127.0.0.1:40854 - "GET /meta HTTP/1.1" 200 OK
-WARNING:porta:Попытка доступа с неверным токеном: http://localhost:8111/meta
-INFO:     127.0.0.1:45104 - "GET /meta HTTP/1.1" 401 Unauthorized
-INFO:porta:[AGENT] test-agent-001 called agent_status: {'status': 'ok', 'agent_id': 'test-agent-001', 'timestamp': '2025-07-31T17:59:43.979202'} at 2025-07-31T17:59:43.979215
-INFO:     127.0.0.1:45120 - "POST /agent/status HTTP/1.1" 200 OK
+ERROR:    [Errno 98] error while attempting to bind on address ('0.0.0.0', 8111): address already in use
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.

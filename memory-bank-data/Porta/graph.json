@@ -7,6 +7,24 @@
   "attributes": {},
   "nodes": [
     {
+      "key": "agent_analytics",
+      "attributes": {
+        "id": "agent_analytics",
+        "type": "Feature",
+        "label": "Расширенная аналитика агентов",
+        "data": {
+          "performance_stats": "planned",
+          "usage_patterns": "planned",
+          "optimization_recommendations": "planned"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:37.703Z",
+          "lastModified": "2025-08-03T09:39:37.703Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "agent_logging_system",
       "attributes": {
         "id": "agent_logging_system",
@@ -25,6 +43,41 @@
         "metadata": {
           "createdAt": "2025-07-31T13:13:00.067Z",
           "lastModified": "2025-07-31T13:13:00.067Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "agent_management",
+      "attributes": {
+        "id": "agent_management",
+        "type": "Feature",
+        "label": "Управление агентами",
+        "data": {
+          "delete_api": "planned",
+          "deactivation": "planned",
+          "bulk_operations": "planned"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:37.703Z",
+          "lastModified": "2025-08-03T09:39:37.703Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "agent_registration",
+      "attributes": {
+        "id": "agent_registration",
+        "type": "Feature",
+        "label": "Автоматическая регистрация агентов",
+        "data": {
+          "trigger": "first_usage",
+          "update": "last_seen"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
           "version": 1
         }
       }
@@ -173,6 +226,24 @@
         "metadata": {
           "createdAt": "2025-07-31T10:16:16.827Z",
           "lastModified": "2025-07-31T10:16:16.827Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "caching_optimization",
+      "attributes": {
+        "id": "caching_optimization",
+        "type": "Feature",
+        "label": "Кэширование и производительность",
+        "data": {
+          "redis": "planned",
+          "connection_pools": "planned",
+          "lazy_loading": "planned"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:37.703Z",
+          "lastModified": "2025-08-03T09:39:37.703Z",
           "version": 1
         }
       }
@@ -742,6 +813,25 @@
       }
     },
     {
+      "key": "latency_results",
+      "attributes": {
+        "id": "latency_results",
+        "type": "Metrics",
+        "label": "Результаты latency тестов",
+        "data": {
+          "avg_response": "998.70ms",
+          "p95": "1813.52ms",
+          "p99": "2026.20ms",
+          "success_rate": "100%"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T10:03:33.297Z",
+          "lastModified": "2025-08-03T10:03:33.297Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "list_dir_endpoint",
       "attributes": {
         "id": "list_dir_endpoint",
@@ -860,6 +950,24 @@
       }
     },
     {
+      "key": "metrics_monitoring",
+      "attributes": {
+        "id": "metrics_monitoring",
+        "type": "Feature",
+        "label": "Метрики и мониторинг",
+        "data": {
+          "prometheus": "planned",
+          "health_checks": "planned",
+          "alerts": "planned"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:37.703Z",
+          "lastModified": "2025-08-03T09:39:37.703Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "network_concepts",
       "attributes": {
         "id": "network_concepts",
@@ -881,6 +989,24 @@
         "metadata": {
           "createdAt": "2025-07-31T12:32:26.915Z",
           "lastModified": "2025-07-31T12:32:26.915Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "new_endpoints",
+      "attributes": {
+        "id": "new_endpoints",
+        "type": "Feature",
+        "label": "Новые API endpoints",
+        "data": {
+          "list": "/agent/list",
+          "history": "/agent/history",
+          "pipeline": "/agent/pipeline"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
           "version": 1
         }
       }
@@ -936,6 +1062,23 @@
       }
     },
     {
+      "key": "operation_history",
+      "attributes": {
+        "id": "operation_history",
+        "type": "Feature",
+        "label": "История операций агентов",
+        "data": {
+          "storage": "SQLite",
+          "filtering": "by_type_time"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "original_issues",
       "attributes": {
         "id": "original_issues",
@@ -951,6 +1094,43 @@
         "metadata": {
           "createdAt": "2025-07-31T10:16:40.066Z",
           "lastModified": "2025-07-31T10:16:40.066Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "performance_audit",
+      "attributes": {
+        "id": "performance_audit",
+        "type": "Analysis",
+        "label": "Аудит производительности Porta",
+        "data": {
+          "date": "2025-08-02",
+          "status": "completed",
+          "stability": "unstable",
+          "cv": "33.3%"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T10:03:33.297Z",
+          "lastModified": "2025-08-03T10:03:33.297Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "pipeline_execution",
+      "attributes": {
+        "id": "pipeline_execution",
+        "type": "Feature",
+        "label": "Pipeline команд",
+        "data": {
+          "sequential": true,
+          "error_handling": true,
+          "timeout": "configurable"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
           "version": 1
         }
       }
@@ -1290,6 +1470,24 @@
       }
     },
     {
+      "key": "redis_recommendation",
+      "attributes": {
+        "id": "redis_recommendation",
+        "type": "Recommendation",
+        "label": "Рекомендация: Redis кэширование",
+        "data": {
+          "priority": "high",
+          "reason": "stability_improvement",
+          "impact": "high"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T10:03:33.297Z",
+          "lastModified": "2025-08-03T10:03:33.297Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "requirements_txt",
       "attributes": {
         "id": "requirements_txt",
@@ -1307,6 +1505,25 @@
         "metadata": {
           "createdAt": "2025-07-31T10:15:50.212Z",
           "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "resource_usage",
+      "attributes": {
+        "id": "resource_usage",
+        "type": "Metrics",
+        "label": "Использование ресурсов",
+        "data": {
+          "cpu": "10.7%",
+          "ram": "0.3%",
+          "db_size": "20KB",
+          "log_size": "4KB"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T10:03:33.297Z",
+          "lastModified": "2025-08-03T10:03:33.297Z",
           "version": 1
         }
       }
@@ -1604,6 +1821,45 @@
       }
     },
     {
+      "key": "sqlite_database",
+      "attributes": {
+        "id": "sqlite_database",
+        "type": "Feature",
+        "label": "SQLite база данных агентов",
+        "data": {
+          "tables": [
+            "agents",
+            "agent_operations"
+          ],
+          "file": "agents.db",
+          "size": "20KB"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "sqlite_performance",
+      "attributes": {
+        "id": "sqlite_performance",
+        "type": "Analysis",
+        "label": "Производительность SQLite",
+        "data": {
+          "status": "good",
+          "operations": "1_agent_2_ops",
+          "response_time": "<1ms"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T10:03:33.297Z",
+          "lastModified": "2025-08-03T10:03:33.297Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "stage2_completion",
       "attributes": {
         "id": "stage2_completion",
@@ -1658,6 +1914,41 @@
         "metadata": {
           "createdAt": "2025-07-31T13:42:59.838Z",
           "lastModified": "2025-07-31T13:42:59.838Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "stage4_completion",
+      "attributes": {
+        "id": "stage4_completion",
+        "type": "Milestone",
+        "label": "Этап 4: Дополнительные возможности - ЗАВЕРШЕН",
+        "data": {
+          "version": "1.3.0",
+          "date": "2025-08-02T00:18",
+          "status": "completed"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "stage5_planning",
+      "attributes": {
+        "id": "stage5_planning",
+        "type": "Milestone",
+        "label": "Этап 5: Оптимизация и мониторинг - ПЛАНИРУЕТСЯ",
+        "data": {
+          "status": "planned",
+          "priority": "high"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:37.703Z",
+          "lastModified": "2025-08-03T09:39:37.703Z",
           "version": 1
         }
       }
@@ -2273,6 +2564,32 @@
       }
     },
     {
+      "key": "geid_34_0",
+      "source": "new_endpoints",
+      "target": "operation_history",
+      "attributes": {
+        "relationshipType": "PROVIDES_ACCESS",
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_34_1",
+      "source": "new_endpoints",
+      "target": "pipeline_execution",
+      "attributes": {
+        "relationshipType": "PROVIDES_ACCESS",
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_44_4",
       "source": "ngrok_knowledge",
       "target": "network_concepts",
@@ -2281,6 +2598,58 @@
         "metadata": {
           "createdAt": "2025-07-31T12:32:26.948Z",
           "lastModified": "2025-07-31T12:32:26.948Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_21_0",
+      "source": "performance_audit",
+      "target": "latency_results",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-08-03T10:03:33.297Z",
+          "lastModified": "2025-08-03T10:03:33.297Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_21_1",
+      "source": "performance_audit",
+      "target": "redis_recommendation",
+      "attributes": {
+        "relationshipType": "GENERATES",
+        "metadata": {
+          "createdAt": "2025-08-03T10:03:33.297Z",
+          "lastModified": "2025-08-03T10:03:33.297Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_21_2",
+      "source": "performance_audit",
+      "target": "resource_usage",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-08-03T10:03:33.297Z",
+          "lastModified": "2025-08-03T10:03:33.297Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_21_3",
+      "source": "performance_audit",
+      "target": "sqlite_performance",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-08-03T10:03:33.297Z",
+          "lastModified": "2025-08-03T10:03:33.297Z",
           "version": 1
         }
       }
@@ -3053,6 +3422,32 @@
       }
     },
     {
+      "key": "geid_34_2",
+      "source": "sqlite_database",
+      "target": "agent_registration",
+      "attributes": {
+        "relationshipType": "SUPPORTS",
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_34_3",
+      "source": "sqlite_database",
+      "target": "operation_history",
+      "attributes": {
+        "relationshipType": "SUPPORTS",
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_50_20",
       "source": "stage2_completion",
       "target": "meta_endpoint",
@@ -3131,6 +3526,149 @@
       }
     },
     {
+      "key": "geid_34_4",
+      "source": "stage4_completion",
+      "target": "agent_registration",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_34_5",
+      "source": "stage4_completion",
+      "target": "new_endpoints",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_34_6",
+      "source": "stage4_completion",
+      "target": "operation_history",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_34_7",
+      "source": "stage4_completion",
+      "target": "pipeline_execution",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_34_8",
+      "source": "stage4_completion",
+      "target": "sqlite_database",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:30.983Z",
+          "lastModified": "2025-08-03T09:39:30.983Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_35_0",
+      "source": "stage4_completion",
+      "target": "stage5_planning",
+      "attributes": {
+        "relationshipType": "PRECEDES",
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:37.703Z",
+          "lastModified": "2025-08-03T09:39:37.703Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_35_1",
+      "source": "stage5_planning",
+      "target": "agent_analytics",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:37.703Z",
+          "lastModified": "2025-08-03T09:39:37.703Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_35_2",
+      "source": "stage5_planning",
+      "target": "agent_management",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:37.703Z",
+          "lastModified": "2025-08-03T09:39:37.703Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_35_3",
+      "source": "stage5_planning",
+      "target": "caching_optimization",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:37.703Z",
+          "lastModified": "2025-08-03T09:39:37.703Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_35_4",
+      "source": "stage5_planning",
+      "target": "metrics_monitoring",
+      "attributes": {
+        "relationshipType": "INCLUDES",
+        "metadata": {
+          "createdAt": "2025-08-03T09:39:37.703Z",
+          "lastModified": "2025-08-03T09:39:37.703Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_21_4",
+      "source": "stage5_planning",
+      "target": "performance_audit",
+      "attributes": {
+        "relationshipType": "BASED_ON",
+        "metadata": {
+          "createdAt": "2025-08-03T10:03:33.297Z",
+          "lastModified": "2025-08-03T10:03:33.297Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_49_1",
       "source": "team_achievements",
       "target": "next_development_phase",
@@ -3197,9 +3735,9 @@
     }
   ],
   "metadata": {
-    "lastSaved": "2025-07-31T14:00:39.203Z",
-    "nodeCount": 84,
-    "edgeCount": 100,
+    "lastSaved": "2025-08-03T10:03:33.298Z",
+    "nodeCount": 100,
+    "edgeCount": 119,
     "version": 1
   }
 }
