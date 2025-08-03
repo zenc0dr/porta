@@ -530,6 +530,51 @@
       }
     },
     {
+      "key": "etap5_completion",
+      "attributes": {
+        "id": "etap5_completion",
+        "type": "Milestone",
+        "label": "Этап 5: Плавный переход завершён",
+        "data": {
+          "date": "2025-08-03",
+          "status": "completed",
+          "approach": "observation_mode",
+          "redis_decision": "not_needed_yet"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T10:33:23.389Z",
+          "lastModified": "2025-08-03T10:33:23.389Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "etap5_progress_report",
+      "attributes": {
+        "id": "etap5_progress_report",
+        "type": "Document",
+        "label": "Отчёт о прогрессе Этапа 5",
+        "data": {
+          "file": "docs/etap5_progress.md",
+          "tasks_completed": [
+            "performance_audit",
+            "technical_report",
+            "redis_criteria"
+          ],
+          "next_steps": [
+            "monitoring",
+            "stress_testing",
+            "criteria_updates"
+          ]
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T10:33:23.389Z",
+          "lastModified": "2025-08-03T10:33:23.389Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "external_access",
       "attributes": {
         "id": "external_access",
@@ -1118,6 +1163,24 @@
       }
     },
     {
+      "key": "performance_audit_updated",
+      "attributes": {
+        "id": "performance_audit_updated",
+        "type": "Document",
+        "label": "Performance Audit обновлён",
+        "data": {
+          "file": "docs/performance_audit.md",
+          "key_finding": "cleaning_improved_code_quality_not_performance",
+          "redis_recommendation": "follow_criteria"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T10:33:23.389Z",
+          "lastModified": "2025-08-03T10:33:23.389Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "pipeline_execution",
       "attributes": {
         "id": "pipeline_execution",
@@ -1465,6 +1528,29 @@
         "metadata": {
           "createdAt": "2025-07-31T10:15:50.212Z",
           "lastModified": "2025-07-31T10:15:50.212Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "redis_criteria_document",
+      "attributes": {
+        "id": "redis_criteria_document",
+        "type": "Document",
+        "label": "Критерии внедрения Redis",
+        "data": {
+          "file": "docs/decisions/redis_adoption_criteria.md",
+          "thresholds": [
+            "5_agents",
+            "p95_2000ms",
+            "cv_50_percent",
+            "db_size_100mb"
+          ],
+          "philosophy": "wait_for_system_request"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T10:33:23.389Z",
+          "lastModified": "2025-08-03T10:33:23.389Z",
           "version": 1
         }
       }
@@ -2059,6 +2145,24 @@
       }
     },
     {
+      "key": "technical_report_created",
+      "attributes": {
+        "id": "technical_report_created",
+        "type": "Document",
+        "label": "Технический отчёт после очистки",
+        "data": {
+          "file": "docs/after_cleanup_2025-08-03.md",
+          "comparison": "before_after_metrics",
+          "conclusion": "stable_performance_improved_code_quality"
+        },
+        "metadata": {
+          "createdAt": "2025-08-03T10:33:23.389Z",
+          "lastModified": "2025-08-03T10:33:23.389Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "testing_results",
       "attributes": {
         "id": "testing_results",
@@ -2325,6 +2429,58 @@
         "metadata": {
           "createdAt": "2025-07-31T10:15:50.213Z",
           "lastModified": "2025-07-31T10:15:50.213Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_22_0",
+      "source": "etap5_completion",
+      "target": "etap5_progress_report",
+      "attributes": {
+        "relationshipType": "GENERATED",
+        "metadata": {
+          "createdAt": "2025-08-03T10:33:23.389Z",
+          "lastModified": "2025-08-03T10:33:23.389Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_22_1",
+      "source": "etap5_completion",
+      "target": "performance_audit_updated",
+      "attributes": {
+        "relationshipType": "GENERATED",
+        "metadata": {
+          "createdAt": "2025-08-03T10:33:23.390Z",
+          "lastModified": "2025-08-03T10:33:23.390Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_22_2",
+      "source": "etap5_completion",
+      "target": "redis_criteria_document",
+      "attributes": {
+        "relationshipType": "GENERATED",
+        "metadata": {
+          "createdAt": "2025-08-03T10:33:23.390Z",
+          "lastModified": "2025-08-03T10:33:23.390Z",
+          "version": 1
+        }
+      }
+    },
+    {
+      "key": "geid_22_3",
+      "source": "etap5_completion",
+      "target": "technical_report_created",
+      "attributes": {
+        "relationshipType": "GENERATED",
+        "metadata": {
+          "createdAt": "2025-08-03T10:33:23.390Z",
+          "lastModified": "2025-08-03T10:33:23.390Z",
           "version": 1
         }
       }
@@ -3318,6 +3474,19 @@
       }
     },
     {
+      "key": "geid_22_4",
+      "source": "redis_criteria_document",
+      "target": "performance_audit_updated",
+      "attributes": {
+        "relationshipType": "INFLUENCES",
+        "metadata": {
+          "createdAt": "2025-08-03T10:33:23.390Z",
+          "lastModified": "2025-08-03T10:33:23.390Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_50_14",
       "source": "requirements_txt",
       "target": "fastapi_framework",
@@ -3682,6 +3851,19 @@
       }
     },
     {
+      "key": "geid_22_5",
+      "source": "technical_report_created",
+      "target": "performance_audit_updated",
+      "attributes": {
+        "relationshipType": "REFERENCES",
+        "metadata": {
+          "createdAt": "2025-08-03T10:33:23.390Z",
+          "lastModified": "2025-08-03T10:33:23.390Z",
+          "version": 1
+        }
+      }
+    },
+    {
       "key": "geid_52_11",
       "source": "testing_strategy",
       "target": "deployment_verification",
@@ -3735,9 +3917,9 @@
     }
   ],
   "metadata": {
-    "lastSaved": "2025-08-03T10:03:33.298Z",
-    "nodeCount": 100,
-    "edgeCount": 119,
+    "lastSaved": "2025-08-03T10:33:28.050Z",
+    "nodeCount": 105,
+    "edgeCount": 125,
     "version": 1
   }
 }
