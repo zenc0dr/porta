@@ -4,4 +4,7 @@ node_modules/
 *.url
 __pycache__/
 *.pyc
+# Базы данных
+*.db
 data/*.db
+agents.db
