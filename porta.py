@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from subprocess import run, PIPE, TimeoutExpired
@@ -164,12 +164,29 @@ def log_agent_call(agent_id: str, method: str, result: dict):
 
 
 @app.get("/")
-def read_root():
+def read_root(request: Request):
+    """Умный корневой эндпоинт: возвращает HTML для браузера, JSON для API"""
+    
+    # Проверяем User-Agent для определения типа клиента
+    user_agent = request.headers.get("user-agent", "").lower()
+    
+    # Если это браузер (содержит browser-специфичные строки)
+    if any(browser in user_agent for browser in ["mozilla", "chrome", "safari", "firefox", "edge", "opera"]):
+        # Возвращаем HTML страницу Porta Playground
+        try:
+            with open("web/index.html", "r", encoding="utf-8") as f:
+                html_content = f.read()
+            return HTMLResponse(content=html_content, media_type="text/html")
+        except FileNotFoundError:
+            return HTMLResponse(content="<h1>Porta Playground не найден</h1>", media_type="text/html")
+    
+    # Для API клиентов возвращаем JSON
     return {
         "name": "Porta MCP",
         "description": "Локальный интерфейс для агентов",
         "version": "1.3.0",
         "security": "X-PORTA-TOKEN authentication enabled",
+        "playground_url": "/web/",
         "methods": [
             {
                 "name": "run_bash",

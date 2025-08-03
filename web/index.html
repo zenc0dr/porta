@@ -95,7 +95,7 @@
                             <textarea 
                                 id="commandInput" 
                                 class="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-porta-500 focus:border-porta-500 font-mono text-sm"
-                                placeholder='{"cmd": "echo Hello from agent", "agent_id": "web-agent-001"}'
+                                placeholder='{"cmd": "echo Hello from agent", "agent_id": "test123"}'
                             ></textarea>
                         </div>
                         <div class="flex items-center justify-between">
@@ -129,30 +129,82 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">⚡ Готовые команды</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "echo Hello from agent", "agent_id": "web-agent-001"}'>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "echo Hello from agent", "agent_id": "test123"}'>
                             <div class="font-medium text-gray-800">👋 Приветствие</div>
                             <div class="text-xs text-gray-500 mt-1">echo Hello from agent</div>
                         </button>
-                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "pwd && ls -la", "agent_id": "web-agent-001"}'>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "pwd && ls -la", "agent_id": "test123"}'>
                             <div class="font-medium text-gray-800">📁 Текущая директория</div>
                             <div class="text-xs text-gray-500 mt-1">pwd && ls -la</div>
                         </button>
-                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "df -h", "agent_id": "web-agent-001"}'>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "df -h", "agent_id": "test123"}'>
                             <div class="font-medium text-gray-800">💾 Дисковое пространство</div>
                             <div class="text-xs text-gray-500 mt-1">df -h</div>
                         </button>
-                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "free -h", "agent_id": "web-agent-001"}'>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "free -h", "agent_id": "test123"}'>
                             <div class="font-medium text-gray-800">🧠 Память</div>
                             <div class="text-xs text-gray-500 mt-1">free -h</div>
                         </button>
-                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "ps aux | head -10", "agent_id": "web-agent-001"}'>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "ps aux | head -10", "agent_id": "test123"}'>
                             <div class="font-medium text-gray-800">⚙️ Процессы</div>
                             <div class="text-xs text-gray-500 mt-1">ps aux | head -10</div>
                         </button>
-                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "uname -a", "agent_id": "web-agent-001"}'>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "uname -a", "agent_id": "test123"}'>
                             <div class="font-medium text-gray-800">🖥️ Система</div>
                             <div class="text-xs text-gray-500 mt-1">uname -a</div>
                         </button>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "whoami && hostname", "agent_id": "test123"}'>
+                            <div class="font-medium text-gray-800">👤 Пользователь</div>
+                            <div class="text-xs text-gray-500 mt-1">whoami && hostname</div>
+                        </button>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "ls -la /proc/$$/fd", "agent_id": "test123"}'>
+                            <div class="font-medium text-gray-800">🔗 Дескрипторы</div>
+                            <div class="text-xs text-gray-500 mt-1">ls -la /proc/$$/fd</div>
+                        </button>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "netstat -tuln | head -10", "agent_id": "test123"}'>
+                            <div class="font-medium text-gray-800">🌐 Сети</div>
+                            <div class="text-xs text-gray-500 mt-1">netstat -tuln | head -10</div>
+                        </button>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "cat /proc/cpuinfo | grep model", "agent_id": "test123"}'>
+                            <div class="font-medium text-gray-800">🔧 CPU</div>
+                            <div class="text-xs text-gray-500 mt-1">cat /proc/cpuinfo | grep model</div>
+                        </button>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "ls -la memory-bank-data/", "agent_id": "test123"}'>
+                            <div class="font-medium text-gray-800">🧠 Memory Bank</div>
+                            <div class="text-xs text-gray-500 mt-1">ls -la memory-bank-data/</div>
+                        </button>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "find . -name \\"*.py\\" | head -5", "agent_id": "test123"}'>
+                            <div class="font-medium text-gray-800">🐍 Python файлы</div>
+                            <div class="text-xs text-gray-500 mt-1">find . -name "*.py" | head -5</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Работа с файлами -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">📁 Работа с файлами</h3>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <button class="command-preset bg-blue-50 hover:bg-blue-100 p-3 rounded-lg text-left border border-blue-200" data-command='{"path": "test_rael.txt", "content": "Привет от Раэль! 👋\\n\\nЭто тестовый файл, созданный через Porta Playground.\\n\\nДата: $(date)\\nАгент: test123", "agent_id": "test123"}'>
+                                <div class="font-medium text-blue-800">✏️ Создать файл</div>
+                                <div class="text-xs text-blue-600 mt-1">test_rael.txt</div>
+                            </button>
+                            <button class="command-preset bg-green-50 hover:bg-green-100 p-3 rounded-lg text-left border border-green-200" data-command='{"path": "test_rael.txt", "agent_id": "test123"}'>
+                                <div class="font-medium text-green-800">📖 Читать файл</div>
+                                <div class="text-xs text-green-600 mt-1">test_rael.txt</div>
+                            </button>
+                            <button class="command-preset bg-purple-50 hover:bg-purple-100 p-3 rounded-lg text-left border border-purple-200" data-command='{"path": ".", "include_hidden": false, "agent_id": "test123"}'>
+                                <div class="font-medium text-purple-800">📂 Список файлов</div>
+                                <div class="text-xs text-purple-600 mt-1">текущая директория</div>
+                            </button>
+                            <button class="command-preset bg-orange-50 hover:bg-orange-100 p-3 rounded-lg text-left border border-orange-200" data-command='{"path": "memory-bank-data", "include_hidden": true, "agent_id": "test123"}'>
+                                <div class="font-medium text-orange-800">🧠 Memory Bank</div>
+                                <div class="text-xs text-orange-600 mt-1">содержимое папки</div>
+                            </button>
+                        </div>
+                        <div class="text-xs text-gray-500">
+                            💡 Используй эти команды для работы с файловой системой через API
+                        </div>
                     </div>
                 </div>
 
@@ -277,7 +329,7 @@
             try {
                 const response = await fetch('/meta', {
                     headers: {
-                        'X-PORTA-TOKEN': 'web-agent-001'
+                        'X-PORTA-TOKEN': 'test123'
                     }
                 });
                 
@@ -318,11 +370,24 @@
                 }
 
                 const startTime = new Date();
-                const response = await fetch('/run_bash', {
+                
+                // Определяем тип команды и соответствующий endpoint
+                let endpoint = '/run_bash';
+                if (parsedCommand.hasOwnProperty('path')) {
+                    if (parsedCommand.hasOwnProperty('content')) {
+                        endpoint = '/write_file';
+                    } else if (parsedCommand.hasOwnProperty('include_hidden')) {
+                        endpoint = '/list_dir';
+                    } else {
+                        endpoint = '/read_file';
+                    }
+                }
+                
+                const response = await fetch(endpoint, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-PORTA-TOKEN': 'web-agent-001'
+                        'X-PORTA-TOKEN': 'test123'
                     },
                     body: JSON.stringify(parsedCommand)
                 });
@@ -407,6 +472,9 @@
                                 ${log.response.stderr ? `<div class="text-red-700">stderr: ${log.response.stderr}</div>` : ''}
                                 ${log.response.exit_code !== undefined ? `<div class="text-blue-700">exit_code: ${log.response.exit_code}</div>` : ''}
                                 ${log.response.error ? `<div class="text-red-700">error: ${log.response.error}</div>` : ''}
+                                ${log.response.content ? `<div class="text-purple-700">content: ${log.response.content}</div>` : ''}
+                                ${log.response.files ? `<div class="text-orange-700">files: ${JSON.stringify(log.response.files, null, 2)}</div>` : ''}
+                                ${log.response.message ? `<div class="text-blue-700">message: ${log.response.message}</div>` : ''}
                             </div>
                         </div>
                     </div>
