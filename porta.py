@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from subprocess import run, PIPE, TimeoutExpired
 from typing import Optional, List, Dict, Any
@@ -16,6 +17,10 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Porta MCP", description="Локальный интерфейс для агентов")
+
+# Монтируем статические файлы
+if os.path.exists("web"):
+    app.mount("/web", StaticFiles(directory="web"), name="web")
 
 # Глобальная переменная для отслеживания времени запуска
 START_TIME = time.time()
@@ -118,6 +123,10 @@ async def verify_token(request: Request, call_next):
     """Middleware для проверки X-PORTA-TOKEN заголовка"""
     expected_token = os.getenv("PORTA_TOKEN")
     token = request.headers.get("X-PORTA-TOKEN")
+    
+    # Пропускаем проверку для статических файлов
+    if request.url.path.startswith("/web/"):
+        return await call_next(request)
     
     # Если токен не настроен, пропускаем проверку
     if not expected_token:
@@ -716,4 +725,4 @@ def agent_pipeline(request: AgentPipelineRequest):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+    uvicorn.run(app, host="0.0.0.0", port=8111)

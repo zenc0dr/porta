@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porta Playground - Агентный Интерфейс</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        porta: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .command-preset {
+            transition: all 0.2s ease;
+        }
+        .command-preset:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .log-entry {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .typing-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #3b82f6;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        .typing-indicator:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-porta-600 to-porta-700 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold">🚪 Porta Playground</h1>
+                    <p class="text-porta-100 mt-2">Интерфейс взаимодействия для агентов</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-sm opacity-90">Версия 1.3.0</div>
+                    <div class="text-xs opacity-75" id="uptime">Загрузка...</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Приветствие -->
+        <div class="prose max-w-2xl mx-auto mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Добро пожаловать, агент! 👋</h2>
+            <p class="text-gray-600 mb-4">
+                Ты находишься в среде <strong class="text-porta-600">Porta</strong> — интерфейсе между агентной системой и этим Linux-устройством.
+            </p>
+            <p class="text-gray-600 mb-4">
+                Через этот интерфейс ты можешь выполнять команды, анализировать систему, а главное — взаимодействовать с миром.
+            </p>
+        </div>
+
+        <!-- Основной контент -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Левая колонка - Команды и выполнение -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Поле для JSON-команды -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">📝 Выполнить команду</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">JSON команда:</label>
+                            <textarea 
+                                id="commandInput" 
+                                class="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-porta-500 focus:border-porta-500 font-mono text-sm"
+                                placeholder='{"cmd": "echo Hello from agent", "agent_id": "web-agent-001"}'
+                            ></textarea>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <button 
+                                    id="executeBtn"
+                                    class="bg-porta-600 hover:bg-porta-700 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
+                                >
+                                    <span>🚀 Выполнить</span>
+                                    <div id="loadingIndicator" class="hidden">
+                                        <div class="typing-indicator"></div>
+                                        <div class="typing-indicator"></div>
+                                        <div class="typing-indicator"></div>
+                                    </div>
+                                </button>
+                                <button 
+                                    id="clearBtn"
+                                    class="text-gray-500 hover:text-gray-700 px-4 py-2 rounded-lg transition-colors"
+                                >
+                                    Очистить
+                                </button>
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                <span id="commandCount">0</span> команд выполнено
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Готовые команды -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">⚡ Готовые команды</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "echo Hello from agent", "agent_id": "web-agent-001"}'>
+                            <div class="font-medium text-gray-800">👋 Приветствие</div>
+                            <div class="text-xs text-gray-500 mt-1">echo Hello from agent</div>
+                        </button>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "pwd && ls -la", "agent_id": "web-agent-001"}'>
+                            <div class="font-medium text-gray-800">📁 Текущая директория</div>
+                            <div class="text-xs text-gray-500 mt-1">pwd && ls -la</div>
+                        </button>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "df -h", "agent_id": "web-agent-001"}'>
+                            <div class="font-medium text-gray-800">💾 Дисковое пространство</div>
+                            <div class="text-xs text-gray-500 mt-1">df -h</div>
+                        </button>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "free -h", "agent_id": "web-agent-001"}'>
+                            <div class="font-medium text-gray-800">🧠 Память</div>
+                            <div class="text-xs text-gray-500 mt-1">free -h</div>
+                        </button>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "ps aux | head -10", "agent_id": "web-agent-001"}'>
+                            <div class="font-medium text-gray-800">⚙️ Процессы</div>
+                            <div class="text-xs text-gray-500 mt-1">ps aux | head -10</div>
+                        </button>
+                        <button class="command-preset bg-gray-50 hover:bg-gray-100 p-3 rounded-lg text-left border border-gray-200" data-command='{"cmd": "uname -a", "agent_id": "web-agent-001"}'>
+                            <div class="font-medium text-gray-800">🖥️ Система</div>
+                            <div class="text-xs text-gray-500 mt-1">uname -a</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Журнал вызовов -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">📋 Журнал вызовов</h3>
+                    <div id="logContainer" class="space-y-3 max-h-96 overflow-y-auto">
+                        <div class="text-gray-500 text-center py-8">
+                            <div class="text-4xl mb-2">📝</div>
+                            <div>Журнал пуст</div>
+                            <div class="text-sm">Выполните первую команду</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правая колонка - Информация и задание -->
+            <div class="space-y-6">
+                <!-- Информация о системе -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">ℹ️ Информация о системе</h3>
+                    <div id="systemInfo" class="space-y-3 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Статус:</span>
+                            <span class="text-green-600 font-medium">🟢 Активен</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Порт:</span>
+                            <span class="font-mono">8111</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Агентов:</span>
+                            <span id="agentCount">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Время работы:</span>
+                            <span id="uptimeDisplay">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Задание для агента -->
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-200">
+                    <h3 class="text-lg font-semibold text-blue-800 mb-4">🎯 Задание для агента</h3>
+                    <div class="space-y-3 text-sm text-blue-700">
+                        <p>
+                            Создай одностраничный сайт, посвящённый <strong>Porta</strong>, используя Tailwind CDN. 
+                            Расскажи о своей роли, возможностях и впечатлениях.
+                        </p>
+                        <div class="bg-white p-3 rounded-lg border border-blue-200">
+                            <div class="font-medium text-blue-800 mb-2">💡 Подсказки:</div>
+                            <ul class="space-y-1 text-xs">
+                                <li>• Используй команду <code class="bg-blue-100 px-1 rounded">write_file</code></li>
+                                <li>• Создай файл <code class="bg-blue-100 px-1 rounded">my-porta-site.html</code></li>
+                                <li>• Добавь красивые анимации и интерактивность</li>
+                                <li>• Расскажи о своём опыте работы с Porta</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Доступные эндпоинты -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">🔗 Доступные эндпоинты</h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                            <span class="font-mono">GET /meta</span>
+                            <span class="text-green-600">✓</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                            <span class="font-mono">POST /run_bash</span>
+                            <span class="text-green-600">✓</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                            <span class="font-mono">POST /write_file</span>
+                            <span class="text-green-600">✓</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                            <span class="font-mono">POST /read_file</span>
+                            <span class="text-green-600">✓</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                            <span class="font-mono">POST /list_dir</span>
+                            <span class="text-green-600">✓</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                            <span class="font-mono">POST /agent/*</span>
+                            <span class="text-green-600">✓</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Глобальные переменные
+        let commandCount = 0;
+        let logs = JSON.parse(localStorage.getItem('porta_logs') || '[]');
+        
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSystemInfo();
+            updateLogDisplay();
+            updateCommandCount();
+            
+            // Обработчики событий
+            document.getElementById('executeBtn').addEventListener('click', executeCommand);
+            document.getElementById('clearBtn').addEventListener('click', clearCommand);
+            
+            // Обработчики для готовых команд
+            document.querySelectorAll('.command-preset').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const command = this.getAttribute('data-command');
+                    document.getElementById('commandInput').value = command;
+                });
+            });
+        });
+
+        // Загрузка информации о системе
+        async function loadSystemInfo() {
+            try {
+                const response = await fetch('/meta', {
+                    headers: {
+                        'X-PORTA-TOKEN': 'web-agent-001'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('uptimeDisplay').textContent = formatUptime(data.uptime);
+                    document.getElementById('uptime').textContent = `Работает ${formatUptime(data.uptime)}`;
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки системной информации:', error);
+            }
+        }
+
+        // Выполнение команды
+        async function executeCommand() {
+            const commandInput = document.getElementById('commandInput');
+            const command = commandInput.value.trim();
+            
+            if (!command) {
+                alert('Введите команду!');
+                return;
+            }
+
+            const executeBtn = document.getElementById('executeBtn');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            
+            // Показываем индикатор загрузки
+            executeBtn.disabled = true;
+            loadingIndicator.classList.remove('hidden');
+            
+            try {
+                let parsedCommand;
+                try {
+                    parsedCommand = JSON.parse(command);
+                } catch (e) {
+                    alert('Неверный формат JSON!');
+                    return;
+                }
+
+                const startTime = new Date();
+                const response = await fetch('/run_bash', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-PORTA-TOKEN': 'web-agent-001'
+                    },
+                    body: JSON.stringify(parsedCommand)
+                });
+
+                const result = await response.json();
+                const endTime = new Date();
+                
+                // Добавляем в журнал
+                const logEntry = {
+                    id: Date.now(),
+                    timestamp: startTime,
+                    duration: endTime - startTime,
+                    command: parsedCommand,
+                    response: result,
+                    success: response.ok
+                };
+                
+                logs.unshift(logEntry);
+                if (logs.length > 50) logs = logs.slice(0, 50); // Ограничиваем количество записей
+                
+                localStorage.setItem('porta_logs', JSON.stringify(logs));
+                commandCount++;
+                
+                updateLogDisplay();
+                updateCommandCount();
+                
+                // Очищаем поле ввода
+                commandInput.value = '';
+                
+            } catch (error) {
+                console.error('Ошибка выполнения команды:', error);
+                alert('Ошибка выполнения команды: ' + error.message);
+            } finally {
+                // Скрываем индикатор загрузки
+                executeBtn.disabled = false;
+                loadingIndicator.classList.add('hidden');
+            }
+        }
+
+        // Очистка поля ввода
+        function clearCommand() {
+            document.getElementById('commandInput').value = '';
+        }
+
+        // Обновление отображения журнала
+        function updateLogDisplay() {
+            const container = document.getElementById('logContainer');
+            
+            if (logs.length === 0) {
+                container.innerHTML = `
+                    <div class="text-gray-500 text-center py-8">
+                        <div class="text-4xl mb-2">📝</div>
+                        <div>Журнал пуст</div>
+                        <div class="text-sm">Выполните первую команду</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = logs.map(log => `
+                <div class="log-entry bg-gray-50 rounded-lg p-4 border-l-4 ${log.success ? 'border-green-500' : 'border-red-500'}">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-medium text-gray-500">${formatTime(log.timestamp)}</span>
+                            <span class="text-xs text-gray-400">(${log.duration}ms)</span>
+                        </div>
+                        <span class="text-xs px-2 py-1 rounded ${log.success ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">
+                            ${log.success ? '✓ Успех' : '✗ Ошибка'}
+                        </span>
+                    </div>
+                    <div class="space-y-2">
+                        <div>
+                            <div class="text-xs font-medium text-gray-600 mb-1">Команда:</div>
+                            <div class="bg-white p-2 rounded text-xs font-mono text-gray-800 overflow-x-auto">
+                                ${JSON.stringify(log.command, null, 2)}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-xs font-medium text-gray-600 mb-1">Результат:</div>
+                            <div class="bg-white p-2 rounded text-xs font-mono text-gray-800 max-h-32 overflow-y-auto">
+                                ${log.response.stdout ? `<div class="text-green-700">stdout: ${log.response.stdout}</div>` : ''}
+                                ${log.response.stderr ? `<div class="text-red-700">stderr: ${log.response.stderr}</div>` : ''}
+                                ${log.response.exit_code !== undefined ? `<div class="text-blue-700">exit_code: ${log.response.exit_code}</div>` : ''}
+                                ${log.response.error ? `<div class="text-red-700">error: ${log.response.error}</div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Обновление счетчика команд
+        function updateCommandCount() {
+            document.getElementById('commandCount').textContent = commandCount;
+        }
+
+        // Форматирование времени
+        function formatTime(date) {
+            return date.toLocaleTimeString('ru-RU', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+
+        // Форматирование времени работы
+        function formatUptime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            
+            if (hours > 0) {
+                return `${hours}ч ${minutes}м ${secs}с`;
+            } else if (minutes > 0) {
+                return `${minutes}м ${secs}с`;
+            } else {
+                return `${secs}с`;
+            }
+        }
+    </script>
+</body>
+</html> 
