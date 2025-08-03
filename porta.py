@@ -29,8 +29,21 @@ app.add_middleware(
 )
 
 # Монтируем статические файлы
-if os.path.exists("web"):
-    app.mount("/web", StaticFiles(directory="web"), name="web")
+web_dir = os.path.join(os.getcwd(), "web")
+
+# Добавляем ручной роут для /web/ ПЕРЕД монтированием статических файлов
+@app.get("/web/")
+def serve_web():
+    """Ручной роут для веб-интерфейса"""
+    try:
+        with open(os.path.join(web_dir, "index.html"), "r", encoding="utf-8") as f:
+            html_content = f.read()
+        return HTMLResponse(content=html_content, media_type="text/html")
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+
+if os.path.exists(web_dir):
+    app.mount("/web", StaticFiles(directory=web_dir), name="web")
 
 # Глобальная переменная для отслеживания времени запуска
 START_TIME = time.time()
@@ -157,7 +170,7 @@ def read_root(request: Request):
     if any(browser in user_agent for browser in ["mozilla", "chrome", "safari", "firefox", "edge", "opera"]):
         # Возвращаем HTML страницу Porta Playground
         try:
-            with open("web/index.html", "r", encoding="utf-8") as f:
+            with open(os.path.join(web_dir, "index.html"), "r", encoding="utf-8") as f:
                 html_content = f.read()
             return HTMLResponse(content=html_content, media_type="text/html")
         except FileNotFoundError:

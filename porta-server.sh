@@ -5,8 +5,43 @@ UVICORN_PID_FILE="porta.pid"
 NGROK_PID_FILE="ngrok.pid"
 NGROK_URL_FILE="ngrok.url"
 
+# Функция для проверки и очистки конфликтующих процессов
+cleanup_conflicts() {
+    echo "🔍 Проверка конфликтующих процессов..."
+    
+    # Проверяем процессы uvicorn на нашем порту
+    UVICORN_PIDS=$(lsof -ti :$PORT 2>/dev/null)
+    if [ -n "$UVICORN_PIDS" ]; then
+        echo "⚠️ Найдены процессы uvicorn на порту $PORT: $UVICORN_PIDS"
+        echo "🛑 Останавливаю конфликтующие процессы..."
+        echo $UVICORN_PIDS | xargs kill -9 2>/dev/null
+        sleep 1
+    fi
+    
+    # Проверяем процессы ngrok
+    NGROK_PIDS=$(pgrep -f "ngrok http" 2>/dev/null)
+    if [ -n "$NGROK_PIDS" ]; then
+        echo "⚠️ Найдены процессы ngrok: $NGROK_PIDS"
+        echo "🛑 Останавливаю конфликтующие ngrok процессы..."
+        echo $NGROK_PIDS | xargs kill -9 2>/dev/null
+        sleep 1
+    fi
+    
+    # Дополнительная проверка порта
+    if lsof -i :$PORT > /dev/null 2>&1; then
+        echo "⚠️ Порт $PORT всё ещё занят, принудительная очистка..."
+        lsof -ti :$PORT | xargs kill -9 2>/dev/null
+        sleep 2
+    fi
+    
+    echo "✅ Конфликты устранены"
+}
+
 start_server() {
     echo "🚀 Запуск Porta MCP на порту $PORT..."
+    
+    # Очищаем конфликты перед запуском
+    cleanup_conflicts
     
     # Устанавливаем токен безопасности
     export PORTA_TOKEN="test123"
@@ -67,11 +102,17 @@ stop_server() {
         rm -f "$NGROK_PID_FILE"
     else
         # Попробуем найти процесс по имени
-        PIDS=$(pgrep -f "ngrok http 8111")
+        PIDS=$(pgrep -f "ngrok http")
         if [ -n "$PIDS" ]; then
             echo $PIDS | xargs kill -9 2>/dev/null
             echo "✅ ngrok остановлен (найден по имени)"
         fi
+    fi
+    
+    # Дополнительная очистка порта
+    if lsof -i :$PORT > /dev/null 2>&1; then
+        echo "🧹 Очистка порта $PORT..."
+        lsof -ti :$PORT | xargs kill -9 2>/dev/null
     fi
     
     rm -f "$NGROK_URL_FILE"
@@ -124,7 +165,21 @@ case "$1" in
     test)
         test_url
         ;;
+    cleanup)
+        echo "🧹 Принудительная очистка всех процессов..."
+        cleanup_conflicts
+        stop_server
+        echo "✅ Очистка завершена"
+        ;;
     *)
-        echo "Использование: $0 {start|stop|restart|status|test}"
+        echo "Использование: $0 {start|stop|restart|status|test|cleanup}"
+        echo ""
+        echo "Команды:"
+        echo "  start   - Запустить Porta MCP сервер"
+        echo "  stop    - Остановить сервер"
+        echo "  restart - Перезапустить сервер"
+        echo "  status  - Показать статус"
+        echo "  test    - Протестировать URL"
+        echo "  cleanup - Принудительная очистка всех процессов"
         exit 1
 esac
